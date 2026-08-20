@@ -530,6 +530,360 @@
       .steps { grid-template-columns: 1fr; }
       section { padding: 38px 0; }
     }
+  
+    .workflow-step {
+      margin-bottom: 22px;
+    }
+
+    .workflow-step.locked {
+      opacity: .48;
+      pointer-events: none;
+    }
+
+    .step-label {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 0 0 12px 3px;
+    }
+
+    .step-dot {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #111;
+      color: #fff;
+      font: 700 12px "Space Grotesk", sans-serif;
+    }
+
+    .step-label strong {
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 17px;
+      letter-spacing: -.025em;
+    }
+
+    .step-label small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .workflow-panel {
+      padding: clamp(20px, 4vw, 32px);
+    }
+
+    .field-label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .product-input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 16px 17px;
+      background: #fafaf8;
+      outline: none;
+      transition: .2s ease;
+      margin-bottom: 16px;
+    }
+
+    .product-input:focus {
+      background: #fff;
+      border-color: #aaa;
+      box-shadow: 0 0 0 4px rgba(0,0,0,.035);
+    }
+
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .style-card {
+      text-align: left;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 14px;
+      padding: 13px;
+      transition: .2s ease;
+    }
+
+    .style-card:hover {
+      transform: translateY(-2px);
+      border-color: #aaa;
+      box-shadow: 0 8px 20px rgba(0,0,0,.05);
+    }
+
+    .style-card.selected {
+      border-color: #111;
+      background: #f7f7f5;
+      box-shadow: inset 0 0 0 1px #111;
+    }
+
+    .style-card span {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .style-card strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .style-card small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.4;
+      margin-top: 3px;
+    }
+
+    .output-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .output-head h3 {
+      margin: 5px 0 0;
+      font-size: 22px;
+      letter-spacing: -.035em;
+    }
+
+    .status {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #eef7ee;
+      color: var(--success);
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .storyboard-preview {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 7px;
+      margin-bottom: 13px;
+    }
+
+    .mini-story {
+      min-height: 88px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8f8f5;
+    }
+
+    .mini-story span {
+      display: inline-grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border-radius: 7px;
+      background: #111;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .mini-story b {
+      display: block;
+      font-size: 9px;
+    }
+
+    .mini-story p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.3;
+    }
+
+    .next-action {
+      margin-top: 14px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fafaf8;
+    }
+
+    .next-action strong,
+    .next-action small {
+      display: block;
+    }
+
+    .next-action strong { font-size: 13px; }
+    .next-action small { color: var(--muted); font-size: 11px; }
+
+    .secondary-btn {
+      border: 1px solid #111;
+      background: #111;
+      color: white;
+      border-radius: 11px;
+      padding: 10px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: .2s ease;
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+    }
+
+    .upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-bottom: 15px;
+    }
+
+    .image-upload {
+      min-height: 230px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1.5px dashed #cfcfca;
+      border-radius: 16px;
+      background: #fafaf8;
+      padding: 16px;
+      overflow: hidden;
+      transition: .2s ease;
+      margin-top: 7px;
+    }
+
+    .image-upload:hover {
+      border-color: #999;
+      background: #f4f4f1;
+    }
+
+    .image-upload input {
+      display: none;
+    }
+
+    .upload-symbol {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 9px;
+      border-radius: 13px;
+      background: #111;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .upload-content strong,
+    .upload-content small {
+      display: block;
+    }
+
+    .upload-content strong { font-size: 13px; }
+    .upload-content small { color: var(--muted); font-size: 10px; margin-top: 3px; }
+
+    .upload-preview {
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    .video-settings {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .video-settings > div {
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #fafaf8;
+    }
+
+    .setting-title {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 3px;
+    }
+
+    .video-settings strong { font-size: 12px; }
+
+    .generate-btn:disabled {
+      opacity: .42;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .flow-guide {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 13px;
+      padding: 13px;
+      border-radius: 13px;
+      background: #f4f4f1;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .flow-guide span:not(:nth-of-type(even)) {
+      display: inline-grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      border-radius: 7px;
+      background: #111;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 850px) {
+      .style-grid { grid-template-columns: repeat(2, 1fr); }
+      .storyboard-preview { grid-template-columns: repeat(3, 1fr); }
+      .upload-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .style-grid,
+      .upload-grid,
+      .video-settings { grid-template-columns: 1fr; }
+
+      .storyboard-preview { grid-template-columns: repeat(2, 1fr); }
+
+      .next-action {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .secondary-btn { width: 100%; }
+    }
+
   </style>
 </head>
 
@@ -626,98 +980,188 @@
       </section>
 
       <section id="generator">
-        <div class="section-head">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Prototype</div>
+      <h2>Build your<br>storyboard.</h2>
+    </div>
+    <p>Masukkan nama barang. Setelah prompt storyboard dibuat, upload foto produk dan hasil gambar storyboard untuk membuat prompt video 10 detik.</p>
+  </div>
+
+  <div class="generator">
+    <!-- STEP 01 -->
+    <div class="workflow-step active" id="step1">
+      <div class="step-label">
+        <span class="step-dot">01</span>
+        <div>
+          <strong>Storyboard Prompt</strong>
+          <small>Buat prompt untuk menghasilkan storyboard 10 detik.</small>
+        </div>
+      </div>
+
+      <div class="panel workflow-panel">
+        <label class="field-label" for="productName">Barang yang ingin dibuat kontennya</label>
+        <p class="panel-desc">Contoh: botol minum, jam tangan, baju, parfum, kabel charger.</p>
+
+        <input
+          id="productName"
+          class="product-input"
+          type="text"
+          placeholder="Ketik barang di rumah..."
+          autocomplete="off"
+        />
+
+        <div class="style-grid">
+          <button class="style-card selected" data-style="UGC Natural Hand Review">
+            <span>✋</span>
+            <strong>UGC Natural</strong>
+            <small>Terlihat seperti review natural.</small>
+          </button>
+          <button class="style-card" data-style="Product Showcase">
+            <span>✦</span>
+            <strong>Product Showcase</strong>
+            <small>Fokus pada detail produk.</small>
+          </button>
+          <button class="style-card" data-style="Lifestyle">
+            <span>◌</span>
+            <strong>Lifestyle</strong>
+            <small>Produk dalam suasana sehari-hari.</small>
+          </button>
+          <button class="style-card" data-style="Minimalist">
+            <span>□</span>
+            <strong>Minimalist</strong>
+            <small>Clean, simple dan premium.</small>
+          </button>
+        </div>
+
+        <button id="storyboardBtn" class="generate-btn">✨ Generate Storyboard Prompt</button>
+
+        <div id="storyboardOutput" class="output">
+          <div class="output-head">
+            <div>
+              <div class="eyebrow">Storyboard Prompt Ready</div>
+              <h3>Prompt siap dipakai di GPT / Gemini.</h3>
+            </div>
+            <span class="status">✓ Ready</span>
+          </div>
+
+          <div class="storyboard-preview">
+            <div class="mini-story">
+              <span>01</span><b>0:00–0:02</b><p>Hook / hero shot</p>
+            </div>
+            <div class="mini-story">
+              <span>02</span><b>0:02–0:04</b><p>Detail produk</p>
+            </div>
+            <div class="mini-story">
+              <span>03</span><b>0:04–0:06</b><p>Close-up / feature</p>
+            </div>
+            <div class="mini-story">
+              <span>04</span><b>0:06–0:08</b><p>Usage / texture</p>
+            </div>
+            <div class="mini-story">
+              <span>05</span><b>0:08–0:09</b><p>Product beauty shot</p>
+            </div>
+            <div class="mini-story">
+              <span>06</span><b>0:09–0:10</b><p>CTA / ending</p>
+            </div>
+          </div>
+
+          <div class="prompt-box" id="storyboardPrompt"></div>
+          <button class="copy-btn" onclick="copyText('storyboardPrompt', this)">Copy Storyboard Prompt</button>
+
+          <div class="next-action">
+            <div>
+              <strong>Sudah generate gambar storyboard?</strong>
+              <small>Upload foto produk + hasil storyboard untuk lanjut ke prompt video.</small>
+            </div>
+            <button class="secondary-btn" onclick="goToStep2()">Lanjut ke Step 02 →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 02 -->
+    <div class="workflow-step locked" id="step2">
+      <div class="step-label">
+        <span class="step-dot">02</span>
+        <div>
+          <strong>Video Prompt · 10 Seconds</strong>
+          <small>Masukkan foto produk dan gambar storyboard yang sudah dibuat.</small>
+        </div>
+      </div>
+
+      <div class="panel workflow-panel">
+        <div class="upload-grid">
           <div>
-            <div class="eyebrow">Prototype</div>
-            <h2>Content<br>Generator.</h2>
+            <label class="field-label">01 · Foto Produk</label>
+            <label class="image-upload" id="productUpload">
+              <input id="productFile" type="file" accept="image/*">
+              <div class="upload-content" id="productUploadText">
+                <span class="upload-symbol">＋</span>
+                <strong>Upload foto produk</strong>
+                <small>JPG, PNG, WEBP</small>
+              </div>
+              <img id="productPreview" class="upload-preview hidden" alt="Preview produk">
+            </label>
           </div>
-          <p>Upload foto produk untuk mencoba simulasi workflow.</p>
+
+          <div>
+            <label class="field-label">02 · Storyboard</label>
+            <label class="image-upload" id="storyUpload">
+              <input id="storyFile" type="file" accept="image/*">
+              <div class="upload-content" id="storyUploadText">
+                <span class="upload-symbol">＋</span>
+                <strong>Upload gambar storyboard</strong>
+                <small>Hasil generate dari GPT / Gemini</small>
+              </div>
+              <img id="storyPreview" class="upload-preview hidden" alt="Preview storyboard">
+            </label>
+          </div>
         </div>
 
-        <div class="generator">
-          <div class="generator-grid">
-
-            <div class="panel">
-              <h3>01. Product</h3>
-              <p class="panel-desc">Upload foto produk kamu.</p>
-
-              <label class="upload" id="uploadArea">
-                <div id="uploadEmpty">
-                  <div class="upload-icon">＋</div>
-                  <strong>Drop your product here</strong>
-                  <small>PNG, JPG atau WEBP</small><br>
-                  <span class="choose-btn">Pilih Foto</span>
-                </div>
-
-                <img id="preview" class="preview hidden" alt="Preview produk">
-                <input id="fileInput" class="file-input" type="file" accept="image/*">
-              </label>
-            </div>
-
-            <div class="panel">
-              <h3>02. Content</h3>
-              <p class="panel-desc">Tentukan gaya konten yang ingin dibuat.</p>
-
-              <div class="options">
-                <div class="option-row">
-                  <span>Content Style</span>
-                  <select id="style">
-                    <option>Product Showcase</option>
-                    <option>Lifestyle</option>
-                    <option>UGC Faceless</option>
-                    <option>Luxury</option>
-                    <option>Problem → Solution</option>
-                    <option>Minimalist</option>
-                  </select>
-                </div>
-
-                <div class="option-row">
-                  <span>Jumlah konsep</span>
-                  <select id="count">
-                    <option value="3">3 konsep</option>
-                    <option value="5" selected>5 konsep</option>
-                    <option value="10">10 konsep</option>
-                  </select>
-                </div>
-              </div>
-
-              <button id="generateBtn" class="generate-btn">✨ Generate Content</button>
-
-              <div id="output" class="output">
-                <div class="eyebrow">Generated preview</div>
-
-                <div class="result-card">
-                  <h4 id="resultTitle">Concept 01 — Product Showcase</h4>
-                  <p id="resultText">
-                    Cinematic close-up product shot, clean premium environment,
-                    natural lighting, slow camera movement, realistic product details.
-                  </p>
-
-                  <div class="prompt-box" id="promptText">
-Create a premium cinematic product showcase. Keep the exact product identity, shape, proportions, logo placement and packaging details from the reference image. Use a clean minimal environment, realistic lighting, natural shadows, macro close-up, shallow depth of field, high-end commercial photography, vertical 9:16 composition.
-                  </div>
-
-                  <button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
-                </div>
-
-                <div class="result-card">
-                  <h4>🎬 Next step</h4>
-                  <p>
-                    Setelah storyboard dibuat di GPT/Gemini, upload storyboard
-                    ke workflow berikutnya untuk menghasilkan video prompt.
-                  </p>
-                </div>
-              </div>
-            </div>
-
+        <div class="video-settings">
+          <div>
+            <span class="setting-title">Video format</span>
+            <strong>10 seconds · 9:16 vertical</strong>
           </div>
-
-          <div class="notice">
-            Prototype ini masih menggunakan simulasi output. AI API dapat
-            dihubungkan pada tahap berikutnya.
+          <div>
+            <span class="setting-title">Recommended tool</span>
+            <strong>Google Flow</strong>
           </div>
         </div>
-      </section>
+
+        <button id="videoBtn" class="generate-btn" disabled>🎬 Generate Video Prompt</button>
+
+        <div id="videoOutput" class="output">
+          <div class="output-head">
+            <div>
+              <div class="eyebrow">Video Prompt Ready</div>
+              <h3>Siap dibawa ke Google Flow.</h3>
+            </div>
+            <span class="status">✓ Ready</span>
+          </div>
+
+          <div class="prompt-box" id="videoPrompt"></div>
+          <button class="copy-btn" onclick="copyText('videoPrompt', this)">Copy Video Prompt</button>
+
+          <div class="flow-guide">
+            <span>01</span> Copy prompt
+            <span>→</span>
+            <span>02</span> Buka Google Flow
+            <span>→</span>
+            <span>03</span> Attach storyboard
+            <span>→</span>
+            <span>04</span> Generate
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice">
+      Prototype V0.2 · AI API belum terhubung. Output saat ini adalah simulasi workflow.
+    </div>
+  </div>
+</section>
 
       <footer>
         <div>© 2026 AI Affiliate Content System · Prototype</div>
@@ -747,86 +1191,128 @@ Create a premium cinematic product showcase. Keep the exact product identity, sh
       }
     });
 
-    const fileInput = document.getElementById("fileInput");
-    const uploadArea = document.getElementById("uploadArea");
-    const preview = document.getElementById("preview");
-    const uploadEmpty = document.getElementById("uploadEmpty");
+    // STEP 01 — storyboard prompt
+    let selectedStyle = "UGC Natural Hand Review";
 
-    uploadArea.addEventListener("click", (e) => {
-      if (e.target.tagName !== "BUTTON") fileInput.click();
-    });
-
-    fileInput.addEventListener("change", () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-
-      const url = URL.createObjectURL(file);
-      preview.src = url;
-      preview.classList.remove("hidden");
-      uploadEmpty.classList.add("hidden");
-    });
-
-    // Drag & drop
-    ["dragenter", "dragover"].forEach(eventName => {
-      uploadArea.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        uploadArea.style.borderColor = "#777";
-        uploadArea.style.background = "#f1f1ee";
+    document.querySelectorAll(".style-card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".style-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedStyle = card.dataset.style;
       });
     });
 
-    ["dragleave", "drop"].forEach(eventName => {
-      uploadArea.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        uploadArea.style.borderColor = "";
-        uploadArea.style.background = "";
-      });
-    });
+    document.getElementById("storyboardBtn").addEventListener("click", () => {
+      const product = document.getElementById("productName").value.trim();
 
-    uploadArea.addEventListener("drop", (e) => {
-      const file = e.dataTransfer.files[0];
-      if (!file || !file.type.startsWith("image/")) return;
-
-      fileInput.files = e.dataTransfer.files;
-      const url = URL.createObjectURL(file);
-      preview.src = url;
-      preview.classList.remove("hidden");
-      uploadEmpty.classList.add("hidden");
-    });
-
-    document.getElementById("generateBtn").addEventListener("click", () => {
-      const output = document.getElementById("output");
-      const style = document.getElementById("style").value;
-      const count = document.getElementById("count").value;
-
-      if (!fileInput.files.length) {
-        alert("Upload foto produk terlebih dahulu.");
+      if (!product) {
+        alert("Ketik nama barang terlebih dahulu.");
+        document.getElementById("productName").focus();
         return;
       }
 
-      const title = `Concept 01 — ${style}`;
-      const prompt = `Create a ${style.toLowerCase()} affiliate product video storyboard based on the uploaded reference product. Generate ${count} content concepts. Preserve the exact product identity, shape, proportions, packaging, logo placement, colors and important details. Use a vertical 9:16 composition, realistic lighting, natural shadows, commercial-quality photography and multiple cinematic camera angles. Each concept should be suitable for a 10-second faceless affiliate video.`;
+      const prompt = `Create ONE polished 10-second vertical 9:16 product-review storyboard for the product: "${product}".
 
-      document.getElementById("resultTitle").textContent = title;
-      document.getElementById("resultText").textContent =
-        `${count} concept${count > 1 ? "s" : ""} dengan gaya ${style.toLowerCase()} berhasil dibuat. Ini adalah simulasi output untuk prototype.`;
-      document.getElementById("promptText").textContent = prompt;
+Style: ${selectedStyle}.
 
-      output.classList.add("show");
-      output.scrollIntoView({ behavior: "smooth", block: "nearest" });
+IMPORTANT:
+- Use the product name as the exact subject.
+- Design 6 sequential frames covering the full 10 seconds.
+- Keep the same product identity, shape, proportions, colors, materials, packaging and important details across every frame.
+- Make the storyboard look like a practical content-production reference sheet.
+- Include numbered frames 1–6 and exact timestamps:
+  1. 0:00–0:02
+  2. 0:02–0:04
+  3. 0:04–0:06
+  4. 0:06–0:08
+  5. 0:08–0:09
+  6. 0:09–0:10
+- Every frame must use a different useful camera angle or action.
+- Include short Indonesian text describing the shot under each frame.
+- Add a small VIBE & STYLE section.
+- Add an ASMR SFX section with sounds such as packaging, touch, movement, click or notification where appropriate.
+- No human face is required. Hands may appear naturally.
+- Make it visually clear, realistic, commercial and suitable for an affiliate video.
+- Output as ONE complete storyboard sheet, not six unrelated images.`;
+
+      document.getElementById("storyboardPrompt").textContent = prompt;
+      document.getElementById("storyboardOutput").classList.add("show");
+      document.getElementById("storyboardOutput").scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
-    function copyPrompt() {
-      const text = document.getElementById("promptText").textContent;
+    function goToStep2() {
+      document.getElementById("step2").classList.remove("locked");
+      document.getElementById("step2").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // STEP 02 — actual uploads are now required only at the video stage
+    const productFile = document.getElementById("productFile");
+    const storyFile = document.getElementById("storyFile");
+    const productPreview = document.getElementById("productPreview");
+    const storyPreview = document.getElementById("storyPreview");
+    const productUploadText = document.getElementById("productUploadText");
+    const storyUploadText = document.getElementById("storyUploadText");
+    const videoBtn = document.getElementById("videoBtn");
+
+    function setupPreview(input, preview, text) {
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (!file) return;
+
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove("hidden");
+        text.classList.add("hidden");
+        checkVideoReady();
+      });
+    }
+
+    setupPreview(productFile, productPreview, productUploadText);
+    setupPreview(storyFile, storyPreview, storyUploadText);
+
+    function checkVideoReady() {
+      videoBtn.disabled = !(productFile.files.length && storyFile.files.length);
+    }
+
+    videoBtn.addEventListener("click", () => {
+      const product = document.getElementById("productName").value.trim() || "the product";
+
+      const prompt = `Create a 10-second vertical 9:16 cinematic affiliate product video using BOTH attached reference images:
+1. The real product photo — use this as the source of truth for exact product identity.
+2. The 6-frame storyboard — use this as the source of truth for sequence, composition and timing.
+
+Product: "${product}".
+
+Follow the storyboard sequentially:
+0:00–0:02 — hook / hero product shot.
+0:02–0:04 — close-up detail or key feature.
+0:04–0:06 — alternate camera angle showing the product in use.
+0:06–0:08 — texture, material, flexibility or important detail.
+0:08–0:09 — clean beauty/product shot.
+0:09–0:10 — final hero shot with a strong visual ending.
+
+Keep the EXACT same product throughout the video. Do not redesign, morph, replace or change the product. Preserve its shape, proportions, colors, materials, logo, packaging and details.
+
+Use realistic physical motion, natural hand movement if hands are present, smooth camera movement, realistic lighting and shadows. No talking head, no visible face, no random text generation, no extra products and no visual artifacts.
+
+The result should feel like a premium but natural faceless affiliate product review.`;
+
+      document.getElementById("videoPrompt").textContent = prompt;
+      document.getElementById("videoOutput").classList.add("show");
+      document.getElementById("videoOutput").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    function copyText(elementId, button) {
+      const text = document.getElementById(elementId).textContent;
       navigator.clipboard.writeText(text).then(() => {
-        const btn = document.querySelector(".copy-btn");
-        const old = btn.textContent;
-        btn.textContent = "✓ Copied";
-        btn.style.color = "#2e7d32";
+        const old = button.textContent;
+        button.textContent = "✓ Copied";
+        button.style.color = "#2e7d32";
         setTimeout(() => {
-          btn.textContent = old;
-          btn.style.color = "";
+          button.textContent = old;
+          button.style.color = "";
         }, 1400);
+      });
+    }, 1400);
       });
     }
   </script>
