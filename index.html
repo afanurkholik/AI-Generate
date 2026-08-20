@@ -1,1320 +1,569 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Affiliate Content System</title>
-  <meta name="description" content="AI Affiliate Content System — buat konten affiliate faceless dari satu foto produk." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #ffffff;
-      --surface: #f7f7f5;
-      --surface-2: #f0f0ed;
-      --text: #111111;
-      --muted: #737373;
-      --border: #e6e6e2;
-      --accent: #111111;
-      --accent-hover: #2b2b2b;
-      --success: #2e7d32;
-      --radius: 22px;
-      --shadow: 0 20px 60px rgba(0,0,0,.07);
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "DM Sans", sans-serif;
-      line-height: 1.6;
-    }
-
-    button, input { font: inherit; }
-
-    button { cursor: pointer; }
-
-    .hidden { display: none !important; }
-
-    /* LOCK SCREEN */
-    .lock-screen {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 20% 20%, #f3f3ef 0, transparent 32%),
-        radial-gradient(circle at 80% 80%, #f5f5f2 0, transparent 32%),
-        #fff;
-    }
-
-    .lock-card {
-      width: min(430px, 100%);
-      text-align: center;
-      padding: 48px 34px 36px;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      background: rgba(255,255,255,.88);
-      box-shadow: var(--shadow);
-    }
-
-    .logo-mark {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 24px;
-      border-radius: 17px;
-      background: #111;
-      color: white;
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-    }
-
-    .eyebrow {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    h1, h2, h3, .brand {
-      font-family: "Space Grotesk", sans-serif;
-    }
-
-    .lock-card h1 {
-      margin: 9px 0 10px;
-      font-size: clamp(30px, 7vw, 44px);
-      line-height: 1.02;
-      letter-spacing: -.045em;
-    }
-
-    .lock-card p {
-      margin: 0 auto 28px;
-      color: var(--muted);
-      max-width: 330px;
-    }
-
-    .code-wrap {
-      position: relative;
-      margin-bottom: 12px;
-    }
-
-    .code-input {
-      width: 100%;
-      border: 1px solid var(--border);
-      outline: none;
-      border-radius: 15px;
-      padding: 15px 16px;
-      text-align: center;
-      letter-spacing: .12em;
-      background: #fafaf8;
-      transition: .2s ease;
-    }
-
-    .code-input:focus {
-      border-color: #aaa;
-      background: white;
-      box-shadow: 0 0 0 4px rgba(0,0,0,.04);
-    }
-
-    .primary-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 15px;
-      padding: 15px 18px;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      background: var(--accent-hover);
-      box-shadow: 0 10px 25px rgba(0,0,0,.14);
-    }
-
-    .error {
-      min-height: 22px;
-      color: #c62828;
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    /* APP */
-    .app { min-height: 100vh; }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid rgba(230,230,226,.8);
-      background: rgba(255,255,255,.88);
-      backdrop-filter: blur(16px);
-    }
-
-    .nav-inner {
-      width: min(1180px, calc(100% - 40px));
-      height: 74px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -.04em;
-    }
-
-    .brand span { color: #8b8b87; }
-
-    .nav-badge {
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    main {
-      width: min(1180px, calc(100% - 40px));
-      margin: auto;
-    }
-
-    .hero {
-      min-height: 560px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 85px 0 65px;
-    }
-
-    .hero h1 {
-      max-width: 920px;
-      margin: 16px auto 22px;
-      font-size: clamp(48px, 8vw, 92px);
-      line-height: .95;
-      letter-spacing: -.065em;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: #8d8d88;
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: 0 auto 30px;
-      color: var(--muted);
-      font-size: clamp(16px, 2vw, 19px);
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .hero-btn {
-      border: 1px solid var(--border);
-      background: white;
-      color: var(--text);
-      border-radius: 14px;
-      padding: 13px 18px;
-      font-weight: 700;
-      transition: .2s ease;
-    }
-
-    .hero-btn.dark {
-      border-color: #111;
-      background: #111;
-      color: white;
-    }
-
-    .hero-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,.08);
-    }
-
-    section { padding: 55px 0; }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 25px;
-      margin-bottom: 28px;
-    }
-
-    .section-head h2 {
-      margin: 7px 0 0;
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1;
-      letter-spacing: -.05em;
-    }
-
-    .section-head p {
-      max-width: 440px;
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .step {
-      min-height: 245px;
-      padding: 25px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: white;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    }
-
-    .step:hover {
-      transform: translateY(-6px);
-      border-color: #d0d0cb;
-      box-shadow: var(--shadow);
-    }
-
-    .step-number {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border-radius: 11px;
-      background: var(--surface);
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 55px;
-    }
-
-    .step h3 {
-      margin: 0 0 7px;
-      font-size: 21px;
-      letter-spacing: -.035em;
-    }
-
-    .step p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .generator {
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      padding: clamp(22px, 4vw, 45px);
-      background: var(--surface);
-    }
-
-    .generator-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-
-    .panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px;
-    }
-
-    .panel h3 {
-      margin: 0 0 6px;
-      font-size: 21px;
-    }
-
-    .panel-desc {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0 0 20px;
-    }
-
-    .upload {
-      min-height: 260px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border: 1.5px dashed #cfcfca;
-      border-radius: 17px;
-      background: #fafaf8;
-      padding: 20px;
-      transition: .2s ease;
-    }
-
-    .upload:hover {
-      border-color: #999;
-      background: #f5f5f2;
-    }
-
-    .upload-icon {
-      font-size: 35px;
-      margin-bottom: 8px;
-    }
-
-    .upload strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .upload small { color: var(--muted); }
-
-    .file-input { display: none; }
-
-    .choose-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: #111;
-      color: white;
-      font-size: 13px;
-      font-weight: 700;
-      transition: .2s ease;
-    }
-
-    .choose-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,.14);
-    }
-
-    .preview {
-      max-width: 100%;
-      max-height: 220px;
-      border-radius: 14px;
-      object-fit: contain;
-    }
-
-    .options {
-      display: grid;
-      gap: 13px;
-      margin-bottom: 18px;
-    }
-
-    .option-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      transition: .2s ease;
-    }
-
-    .option-row:hover {
-      border-color: #bbb;
-      background: #fafaf8;
-    }
-
-    select {
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 10px;
-      padding: 8px 10px;
-      outline: none;
-    }
-
-    .generate-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 14px;
-      background: #111;
-      color: white;
-      padding: 14px;
-      font-weight: 700;
-      transition: .2s ease;
-    }
-
-    .generate-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,.13);
-    }
-
-    .output {
-      margin-top: 22px;
-      display: none;
-      border-top: 1px solid var(--border);
-      padding-top: 22px;
-    }
-
-    .output.show { display: block; }
-
-    .result-card {
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      background: #fafaf8;
-      margin-top: 12px;
-    }
-
-    .result-card h4 {
-      margin: 0 0 7px;
-      font-family: "Space Grotesk", sans-serif;
-    }
-
-    .result-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .prompt-box {
-      margin-top: 10px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #151515;
-      color: #f5f5f5;
-      font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
-      overflow: auto;
-    }
-
-    .copy-btn {
-      margin-top: 10px;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 10px;
-      padding: 8px 11px;
-      font-size: 12px;
-      font-weight: 700;
-      transition: .2s ease;
-    }
-
-    .copy-btn:hover { background: #f1f1ee; }
-
-    .notice {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
-      padding: 35px 0 50px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    @media (max-width: 850px) {
-      .steps { grid-template-columns: repeat(2, 1fr); }
-      .generator-grid { grid-template-columns: 1fr; }
-      .section-head { align-items: start; flex-direction: column; }
-    }
-
-    @media (max-width: 560px) {
-      .nav-inner, main { width: min(100% - 28px, 1180px); }
-      .nav { position: relative; }
-      .hero { padding: 65px 0 45px; min-height: auto; }
-      .hero h1 { font-size: 50px; }
-      .steps { grid-template-columns: 1fr; }
-      section { padding: 38px 0; }
-    }
-  
-    .workflow-step {
-      margin-bottom: 22px;
-    }
-
-    .workflow-step.locked {
-      opacity: .48;
-      pointer-events: none;
-    }
-
-    .step-label {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      margin: 0 0 12px 3px;
-    }
-
-    .step-dot {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      background: #111;
-      color: #fff;
-      font: 700 12px "Space Grotesk", sans-serif;
-    }
-
-    .step-label strong {
-      display: block;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 17px;
-      letter-spacing: -.025em;
-    }
-
-    .step-label small {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 2px;
-    }
-
-    .workflow-panel {
-      padding: clamp(20px, 4vw, 32px);
-    }
-
-    .field-label {
-      display: block;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .product-input {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 16px 17px;
-      background: #fafaf8;
-      outline: none;
-      transition: .2s ease;
-      margin-bottom: 16px;
-    }
-
-    .product-input:focus {
-      background: #fff;
-      border-color: #aaa;
-      box-shadow: 0 0 0 4px rgba(0,0,0,.035);
-    }
-
-    .style-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 9px;
-      margin-bottom: 18px;
-    }
-
-    .style-card {
-      text-align: left;
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: 14px;
-      padding: 13px;
-      transition: .2s ease;
-    }
-
-    .style-card:hover {
-      transform: translateY(-2px);
-      border-color: #aaa;
-      box-shadow: 0 8px 20px rgba(0,0,0,.05);
-    }
-
-    .style-card.selected {
-      border-color: #111;
-      background: #f7f7f5;
-      box-shadow: inset 0 0 0 1px #111;
-    }
-
-    .style-card span {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 7px;
-    }
-
-    .style-card strong {
-      display: block;
-      font-size: 12px;
-    }
-
-    .style-card small {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.4;
-      margin-top: 3px;
-    }
-
-    .output-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .output-head h3 {
-      margin: 5px 0 0;
-      font-size: 22px;
-      letter-spacing: -.035em;
-    }
-
-    .status {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: #eef7ee;
-      color: var(--success);
-      font-size: 11px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .storyboard-preview {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 7px;
-      margin-bottom: 13px;
-    }
-
-    .mini-story {
-      min-height: 88px;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #f8f8f5;
-    }
-
-    .mini-story span {
-      display: inline-grid;
-      width: 22px;
-      height: 22px;
-      place-items: center;
-      border-radius: 7px;
-      background: #111;
-      color: #fff;
-      font-size: 9px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    .mini-story b {
-      display: block;
-      font-size: 9px;
-    }
-
-    .mini-story p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 9px;
-      line-height: 1.3;
-    }
-
-    .next-action {
-      margin-top: 14px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: #fafaf8;
-    }
-
-    .next-action strong,
-    .next-action small {
-      display: block;
-    }
-
-    .next-action strong { font-size: 13px; }
-    .next-action small { color: var(--muted); font-size: 11px; }
-
-    .secondary-btn {
-      border: 1px solid #111;
-      background: #111;
-      color: white;
-      border-radius: 11px;
-      padding: 10px 13px;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-      transition: .2s ease;
-    }
-
-    .secondary-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 18px rgba(0,0,0,.12);
-    }
-
-    .upload-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 13px;
-      margin-bottom: 15px;
-    }
-
-    .image-upload {
-      min-height: 230px;
-      position: relative;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border: 1.5px dashed #cfcfca;
-      border-radius: 16px;
-      background: #fafaf8;
-      padding: 16px;
-      overflow: hidden;
-      transition: .2s ease;
-      margin-top: 7px;
-    }
-
-    .image-upload:hover {
-      border-color: #999;
-      background: #f4f4f1;
-    }
-
-    .image-upload input {
-      display: none;
-    }
-
-    .upload-symbol {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 9px;
-      border-radius: 13px;
-      background: #111;
-      color: #fff;
-      font-size: 20px;
-    }
-
-    .upload-content strong,
-    .upload-content small {
-      display: block;
-    }
-
-    .upload-content strong { font-size: 13px; }
-    .upload-content small { color: var(--muted); font-size: 10px; margin-top: 3px; }
-
-    .upload-preview {
-      max-width: 100%;
-      max-height: 220px;
-      border-radius: 12px;
-      object-fit: contain;
-    }
-
-    .video-settings {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .video-settings > div {
-      padding: 13px 14px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: #fafaf8;
-    }
-
-    .setting-title {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 3px;
-    }
-
-    .video-settings strong { font-size: 12px; }
-
-    .generate-btn:disabled {
-      opacity: .42;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .flow-guide {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      margin-top: 13px;
-      padding: 13px;
-      border-radius: 13px;
-      background: #f4f4f1;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .flow-guide span:not(:nth-of-type(even)) {
-      display: inline-grid;
-      place-items: center;
-      width: 21px;
-      height: 21px;
-      border-radius: 7px;
-      background: #111;
-      color: white;
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    @media (max-width: 850px) {
-      .style-grid { grid-template-columns: repeat(2, 1fr); }
-      .storyboard-preview { grid-template-columns: repeat(3, 1fr); }
-      .upload-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 560px) {
-      .style-grid,
-      .upload-grid,
-      .video-settings { grid-template-columns: 1fr; }
-
-      .storyboard-preview { grid-template-columns: repeat(2, 1fr); }
-
-      .next-action {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .secondary-btn { width: 100%; }
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walik Labs - AI Affiliate System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fafafa;
+            --surface-color: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border-color: #eaeaea;
+            --accent-color: #000000;
+            --accent-hover: #333333;
+            --code-bg: #1a1a1a;
+            --code-text: #f4f4f4;
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Access Page */
+        #access-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Typography */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mt-4 { margin-top: 2rem; }
+        
+        .brand-title {
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .product-title {
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        /* Forms & Inputs */
+        input[type="text"], input[type="password"], select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            background: var(--surface-color);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus, select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 1.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: #f5f5f5;
+            border-color: var(--accent-color);
+        }
+
+        /* Cards & Layout */
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .badge {
+            background: #f0f0f0;
+            color: var(--text-muted);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Workflow Steps */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .workflow-item {
+            padding: 1.5rem;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        
+        .workflow-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .workflow-step {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--border-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .workflow-item h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Output Areas */
+        .prompt-box {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            margin: 1.5rem 0;
+            text-align: left;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .success-text {
+            color: #10b981;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .simple-workflow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Info Badge */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            background: #f5f5f5;
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        .info-item span {
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+        }
+        
+        .panel-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .panel-item {
+            background: #f5f5f5;
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        
+        .panel-item strong {
+            color: var(--text-main);
+            display: block;
+        }
+
+        #error-message {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- PASSWORD / TESTING SCREEN -->
-  <div id="lockScreen" class="lock-screen">
-    <div class="lock-card">
-      <div class="logo-mark">AI</div>
-      <div class="eyebrow">Private Preview</div>
-      <h1>AI Affiliate<br>Content System</h1>
-      <p>Masukkan kode akses untuk mencoba prototype.</p>
-
-      <form id="accessForm">
-        <div class="code-wrap">
-          <input
-            id="accessCode"
-            class="code-input"
-            type="password"
-            placeholder="Masukkan kode"
-            autocomplete="off"
-            autofocus
-          />
+    <!-- ACCESS PAGE -->
+    <div id="access-page" class="container">
+        <div class="mb-4">
+            <h2 class="brand-title">Walik Labs</h2>
+            <h1 class="product-title font-heading">AI Affiliate System</h1>
+            <p class="text-muted">Masukkan kode akses untuk mencoba prototype.</p>
         </div>
-        <button class="primary-btn" type="submit">Masuk ke Prototype →</button>
-        <div id="error" class="error"></div>
-      </form>
+        
+        <div class="card" style="width: 100%; max-width: 400px;">
+            <div class="input-group">
+                <label>Kode Akses</label>
+                <input type="password" id="access-code" placeholder="Masukkan kode">
+            </div>
+            <button class="btn" onclick="checkAccess()">Masuk ke Prototype →</button>
+            <p id="error-message" class="hidden">Kode akses salah. Coba lagi.</p>
+        </div>
     </div>
-  </div>
 
-  <!-- MAIN APP -->
-  <div id="app" class="app hidden">
-
-    <nav class="nav">
-      <div class="nav-inner">
-        <div class="brand">AI Affiliate <span>System</span></div>
-        <div class="nav-badge">Prototype v0.1</div>
-      </div>
-    </nav>
-
-    <main>
-      <section class="hero">
-        <div>
-          <div class="eyebrow">Faceless affiliate content</div>
-          <h1>One product.<br><em>Many possibilities.</em></h1>
-          <p>
-            Ubah satu foto produk menjadi konsep, storyboard, dan prompt video
-            menggunakan AI — tanpa shooting dan tanpa perlu tampil di kamera.
-          </p>
-          <div class="hero-actions">
-            <button class="hero-btn dark" onclick="document.getElementById('generator').scrollIntoView()">Coba Generator ↓</button>
-            <button class="hero-btn" onclick="document.getElementById('how').scrollIntoView()">Lihat Cara Kerja</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="how">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Simple workflow</div>
-            <h2>Empat langkah.<br>Selesai.</h2>
-          </div>
-          <p>
-            Sistem ini dirancang untuk menghilangkan bagian paling ribet dari
-            produksi konten affiliate.
-          </p>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">01</div>
-            <h3>Upload</h3>
-            <p>Masukkan satu foto produk yang ingin kamu promosikan.</p>
-          </div>
-
-          <div class="step">
-            <div class="step-number">02</div>
-            <h3>Storyboard</h3>
-            <p>AI membuat konsep visual dan prompt gambar dengan berbagai angle.</p>
-          </div>
-
-          <div class="step">
-            <div class="step-number">03</div>
-            <h3>Video Prompt</h3>
-            <p>Storyboard diubah menjadi prompt video siap digunakan.</p>
-          </div>
-
-          <div class="step">
-            <div class="step-number">04</div>
-            <h3>Generate</h3>
-            <p>Gunakan storyboard dan prompt tersebut di Google Flow untuk membuat video.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="generator">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">Prototype</div>
-      <h2>Build your<br>storyboard.</h2>
-    </div>
-    <p>Masukkan nama barang. Setelah prompt storyboard dibuat, upload foto produk dan hasil gambar storyboard untuk membuat prompt video 10 detik.</p>
-  </div>
-
-  <div class="generator">
-    <!-- STEP 01 -->
-    <div class="workflow-step active" id="step1">
-      <div class="step-label">
-        <span class="step-dot">01</span>
-        <div>
-          <strong>Storyboard Prompt</strong>
-          <small>Buat prompt untuk menghasilkan storyboard 10 detik.</small>
-        </div>
-      </div>
-
-      <div class="panel workflow-panel">
-        <label class="field-label" for="productName">Barang yang ingin dibuat kontennya</label>
-        <p class="panel-desc">Contoh: botol minum, jam tangan, baju, parfum, kabel charger.</p>
-
-        <input
-          id="productName"
-          class="product-input"
-          type="text"
-          placeholder="Ketik barang di rumah..."
-          autocomplete="off"
-        />
-
-        <div class="style-grid">
-          <button class="style-card selected" data-style="UGC Natural Hand Review">
-            <span>✋</span>
-            <strong>UGC Natural</strong>
-            <small>Terlihat seperti review natural.</small>
-          </button>
-          <button class="style-card" data-style="Product Showcase">
-            <span>✦</span>
-            <strong>Product Showcase</strong>
-            <small>Fokus pada detail produk.</small>
-          </button>
-          <button class="style-card" data-style="Lifestyle">
-            <span>◌</span>
-            <strong>Lifestyle</strong>
-            <small>Produk dalam suasana sehari-hari.</small>
-          </button>
-          <button class="style-card" data-style="Minimalist">
-            <span>□</span>
-            <strong>Minimalist</strong>
-            <small>Clean, simple dan premium.</small>
-          </button>
-        </div>
-
-        <button id="storyboardBtn" class="generate-btn">✨ Generate Storyboard Prompt</button>
-
-        <div id="storyboardOutput" class="output">
-          <div class="output-head">
+    <!-- MAIN APP -->
+    <div id="main-app" class="container hidden">
+        
+        <nav class="navbar">
             <div>
-              <div class="eyebrow">Storyboard Prompt Ready</div>
-              <h3>Prompt siap dipakai di GPT / Gemini.</h3>
+                <div class="brand-title" style="font-size: 1rem;">Walik Labs</div>
+                <div class="font-heading" style="font-size: 1.2rem;">AI Affiliate System</div>
             </div>
-            <span class="status">✓ Ready</span>
-          </div>
+            <span class="badge">Prototype</span>
+        </nav>
 
-          <div class="storyboard-preview">
-            <div class="mini-story">
-              <span>01</span><b>0:00–0:02</b><p>Hook / hero shot</p>
-            </div>
-            <div class="mini-story">
-              <span>02</span><b>0:02–0:04</b><p>Detail produk</p>
-            </div>
-            <div class="mini-story">
-              <span>03</span><b>0:04–0:06</b><p>Close-up / feature</p>
-            </div>
-            <div class="mini-story">
-              <span>04</span><b>0:06–0:08</b><p>Usage / texture</p>
-            </div>
-            <div class="mini-story">
-              <span>05</span><b>0:08–0:09</b><p>Product beauty shot</p>
-            </div>
-            <div class="mini-story">
-              <span>06</span><b>0:09–0:10</b><p>CTA / ending</p>
-            </div>
-          </div>
+        <header class="text-center mb-4">
+            <h1 class="product-title">Konten Affiliate.<br>Tanpa Tampil Muka.</h1>
+            <p class="text-muted mb-4">Buat storyboard dan prompt video menggunakan AI dari ide produk yang kamu punya.</p>
+            <button class="btn btn-outline" style="max-width: 200px;" onclick="scrollToStep1()">Coba Sekarang ↓</button>
+        </header>
 
-          <div class="prompt-box" id="storyboardPrompt"></div>
-          <button class="copy-btn" onclick="copyText('storyboardPrompt', this)">Copy Storyboard Prompt</button>
-
-          <div class="next-action">
-            <div>
-              <strong>Sudah generate gambar storyboard?</strong>
-              <small>Upload foto produk + hasil storyboard untuk lanjut ke prompt video.</small>
+        <div class="workflow-grid">
+            <div class="workflow-item">
+                <div class="workflow-step">01</div>
+                <h4>Masukkan Produk</h4>
+                <p>Ketik nama barang yang ingin kamu promosikan.</p>
             </div>
-            <button class="secondary-btn" onclick="goToStep2()">Lanjut ke Step 02 →</button>
-          </div>
+            <div class="workflow-item">
+                <div class="workflow-step">02</div>
+                <h4>Buat Storyboard</h4>
+                <p>AI membuat prompt storyboard 6 panel untuk video 10 detik.</p>
+            </div>
+            <div class="workflow-item">
+                <div class="workflow-step">03</div>
+                <h4>Buat Prompt Video</h4>
+                <p>Gunakan storyboard untuk menghasilkan prompt video aesthetic lengkap dengan ASMR dan doodle.</p>
+            </div>
+            <div class="workflow-item">
+                <div class="workflow-step">04</div>
+                <h4>Generate di Google Flow</h4>
+                <p>Masukkan storyboard dan prompt ke Google Flow.</p>
+            </div>
         </div>
-      </div>
+
+        <!-- STEP 01 -->
+        <section id="step-1" class="card">
+            <h2 class="mb-3 font-heading">01 — Prompt Storyboard</h2>
+            
+            <div class="input-group">
+                <label>Nama Produk</label>
+                <input type="text" id="product-input-1" placeholder="Contoh: botol minum">
+            </div>
+            
+            <div class="input-group">
+                <label>Style (Opsional)</label>
+                <select id="style-input">
+                    <option value="UGC Natural">UGC Natural</option>
+                    <option value="Product Showcase">Product Showcase</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Minimalist">Minimalist</option>
+                </select>
+            </div>
+
+            <button class="btn mb-2" onclick="generateStoryboard()">✨ Buat Prompt Storyboard</button>
+
+            <!-- Output Step 1 -->
+            <div id="output-step-1" class="hidden mt-4" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <div class="success-text">✓ Prompt Storyboard Siap</div>
+                
+                <div class="panel-preview">
+                    <div class="panel-item"><strong>01</strong> 0:00–0:02</div>
+                    <div class="panel-item"><strong>02</strong> 0:02–0:04</div>
+                    <div class="panel-item"><strong>03</strong> 0:04–0:06</div>
+                    <div class="panel-item"><strong>04</strong> 0:06–0:08</div>
+                    <div class="panel-item"><strong>05</strong> 0:08–0:09</div>
+                    <div class="panel-item"><strong>06</strong> 0:09–0:10</div>
+                </div>
+
+                <div id="storyboard-prompt" class="prompt-box"></div>
+                
+                <button class="btn btn-outline mb-2" onclick="copyText('storyboard-prompt', this)">Salin Prompt Storyboard</button>
+                <button class="btn" onclick="proceedToStep2()">Lanjut ke Langkah 02 →</button>
+            </div>
+        </section>
+
+        <!-- STEP 02 -->
+        <section id="step-2" class="card">
+            <h2 class="mb-3 font-heading">02 — Prompt Video 10 Detik</h2>
+            
+            <div class="info-grid">
+                <div class="info-item">Durasi: <span>10 detik</span></div>
+                <div class="info-item">Format: <span>9:16 Vertikal</span></div>
+                <div class="info-item">Style: <span>Aesthetic + Faceless</span></div>
+                <div class="info-item">Audio/Visual: <span>ASMR + Doodle Callout</span></div>
+            </div>
+
+            <div class="input-group">
+                <label>Nama Produk</label>
+                <input type="text" id="product-input-2" placeholder="Contoh: Kabel Fast Charging 100W">
+            </div>
+
+            <button class="btn mb-2" onclick="generateVideoPrompt()">🎬 Buat Prompt Video</button>
+
+            <!-- Output Step 2 -->
+            <div id="output-step-2" class="hidden mt-4" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <div class="success-text">✓ Prompt Video Siap</div>
+                <p class="text-muted mb-2 font-heading" style="font-size: 0.9rem;">Siap digunakan di Google Flow.</p>
+                
+                <div id="video-prompt" class="prompt-box"></div>
+                
+                <button class="btn btn-outline" onclick="copyText('video-prompt', this)">Salin Prompt Video</button>
+
+                <div class="simple-workflow">
+                    <span>01 Salin Prompt</span> →
+                    <span>02 Buka Google Flow</span> →
+                    <span>03 Masukkan Storyboard</span> →
+                    <span>04 Generate Video</span>
+                </div>
+            </div>
+        </section>
+
     </div>
 
-    <!-- STEP 02 -->
-    <div class="workflow-step locked" id="step2">
-      <div class="step-label">
-        <span class="step-dot">02</span>
-        <div>
-          <strong>Video Prompt · 10 Seconds</strong>
-          <small>Masukkan foto produk dan gambar storyboard yang sudah dibuat.</small>
-        </div>
-      </div>
+    <!-- JAVASCRIPT -->
+    <script>
+        // Access Code Logic
+        function checkAccess() {
+            const code = document.getElementById('access-code').value;
+            const errorMsg = document.getElementById('error-message');
+            
+            if(code === 'testing') {
+                document.getElementById('access-page').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
 
-      <div class="panel workflow-panel">
-        <div class="upload-grid">
-          <div>
-            <label class="field-label">01 · Foto Produk</label>
-            <label class="image-upload" id="productUpload">
-              <input id="productFile" type="file" accept="image/*">
-              <div class="upload-content" id="productUploadText">
-                <span class="upload-symbol">＋</span>
-                <strong>Upload foto produk</strong>
-                <small>JPG, PNG, WEBP</small>
-              </div>
-              <img id="productPreview" class="upload-preview hidden" alt="Preview produk">
-            </label>
-          </div>
+        // Add Enter key listener for access code
+        document.getElementById('access-code').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkAccess();
+            }
+        });
 
-          <div>
-            <label class="field-label">02 · Storyboard</label>
-            <label class="image-upload" id="storyUpload">
-              <input id="storyFile" type="file" accept="image/*">
-              <div class="upload-content" id="storyUploadText">
-                <span class="upload-symbol">＋</span>
-                <strong>Upload gambar storyboard</strong>
-                <small>Hasil generate dari GPT / Gemini</small>
-              </div>
-              <img id="storyPreview" class="upload-preview hidden" alt="Preview storyboard">
-            </label>
-          </div>
-        </div>
+        // Navigation
+        function scrollToStep1() {
+            document.getElementById('step-1').scrollIntoView({ behavior: 'smooth' });
+        }
 
-        <div class="video-settings">
-          <div>
-            <span class="setting-title">Video format</span>
-            <strong>10 seconds · 9:16 vertical</strong>
-          </div>
-          <div>
-            <span class="setting-title">Recommended tool</span>
-            <strong>Google Flow</strong>
-          </div>
-        </div>
+        function proceedToStep2() {
+            const productName = document.getElementById('product-input-1').value;
+            if(productName) {
+                document.getElementById('product-input-2').value = productName;
+            }
+            document.getElementById('step-2').scrollIntoView({ behavior: 'smooth' });
+        }
 
-        <button id="videoBtn" class="generate-btn" disabled>🎬 Generate Video Prompt</button>
+        // Copy Text Logic
+        function copyText(elementId, buttonElement) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = buttonElement.innerText;
+                buttonElement.innerText = "✓ Tersalin!";
+                buttonElement.style.backgroundColor = "#f5f5f5";
+                setTimeout(() => {
+                    buttonElement.innerText = originalText;
+                    buttonElement.style.backgroundColor = "transparent";
+                }, 2000);
+            });
+        }
 
-        <div id="videoOutput" class="output">
-          <div class="output-head">
-            <div>
-              <div class="eyebrow">Video Prompt Ready</div>
-              <h3>Siap dibawa ke Google Flow.</h3>
-            </div>
-            <span class="status">✓ Ready</span>
-          </div>
+        // Generate Storyboard Prompt
+        function generateStoryboard() {
+            const product = document.getElementById('product-input-1').value || "produk";
+            const style = document.getElementById('style-input').value;
+            
+            const promptText = `Buatkan gambar production storyboard yang berisi 6 panel untuk referensi video affiliate vertikal berdurasi 10 detik. Produk utama: ${product}.
 
-          <div class="prompt-box" id="videoPrompt"></div>
-          <button class="copy-btn" onclick="copyText('videoPrompt', this)">Copy Video Prompt</button>
+STYLE & VISUAL:
+- Style visual: ${style}, clean product photography.
+- Fokus utama 100% pada ${product}.
+- Faceless (tanpa wajah). Tangan manusia boleh muncul secara aesthetic hanya jika relevan untuk memegang atau menggunakan ${product}.
+- Tambahkan handwritten doodle annotations (seperti panah, lingkaran, bintang, underline) pada setiap panel.
+- Tambahkan caption pendek text berbahasa Indonesia yang mendeskripsikan vibe/fitur secara general (contoh: "Minimalist", "Clean Design", "Daily Use", "Praktis"). Jangan menggunakan klaim spesifikasi khusus kecuali disebutkan di nama produk.
+- Layout: 6 panel berurutan dalam SATU gambar.
+- Tuliskan timestamp di pojok tiap panel.
+- Jaga konsistensi bentuk ${product} di seluruh panel.
 
-          <div class="flow-guide">
-            <span>01</span> Copy prompt
-            <span>→</span>
-            <span>02</span> Buka Google Flow
-            <span>→</span>
-            <span>03</span> Attach storyboard
-            <span>→</span>
-            <span>04</span> Generate
-          </div>
-        </div>
-      </div>
-    </div>
+STRUKTUR PANEL:
+Panel 1 — 0:00-0:02: Establishing shot ${product} dengan latar belakang aesthetic. Teks doodle pembuka.
+Panel 2 — 0:02-0:04: Close-up ekstrem menunjukkan detail tekstur atau material dari ${product}.
+Panel 3 — 0:04-0:06: Action shot natural (faceless), menunjukkan ${product} sedang disentuh/digunakan.
+Panel 4 — 0:06-0:08: Angle kreatif yang menyorot bentuk atau kepraktisan ${product}.
+Panel 5 — 0:08-0:09: Lifestyle shot, menempatkan ${product} di lingkungan sehari-hari yang natural.
+Panel 6 — 0:09-0:10: Final commercial beauty shot ${product} dengan ruang kosong untuk teks promosi.
 
-    <div class="notice">
-      Prototype V0.2 · AI API belum terhubung. Output saat ini adalah simulasi workflow.
-    </div>
-  </div>
-</section>
+VIBE & ASMR SFX (untuk referensi mood):
+Aesthetic, natural, commercial, soft lighting. Suara ASMR: pergerakan objek yang halus, sentuhan natural, dan interaksi yang memuaskan dengan ${product}.`;
 
-      <footer>
-        <div>© 2026 AI Affiliate Content System · Prototype</div>
-      </footer>
-    </main>
-  </div>
+            document.getElementById('storyboard-prompt').innerText = promptText;
+            document.getElementById('output-step-1').classList.remove('hidden');
+        }
 
-  <script>
-    const ACCESS_CODE = "testing";
+        // Generate Video Prompt
+        function generateVideoPrompt() {
+            const product = document.getElementById('product-input-2').value || "produk";
+            
+            const promptText = `Animasikan gambar storyboard 6 panel ini menjadi video vertikal (9:16) berdurasi 10 detik untuk produk: ${product}.
 
-    const lockScreen = document.getElementById("lockScreen");
-    const app = document.getElementById("app");
-    const accessForm = document.getElementById("accessForm");
-    const accessCode = document.getElementById("accessCode");
-    const error = document.getElementById("error");
+INSTRUKSI VISUAL UTAMA:
+- Cinematic, aesthetic, realistic, faceless (tanpa wajah), product-focused.
+- Gunakan smooth camera movement dan pergerakan natural.
+- Soft lighting dengan realistic shadows.
+- JAGA KONSISTENSI PRODUK: Ikuti storyboard secara berurutan. Jangan mengubah bentuk produk, jangan mengganti produk, jangan membuat produk morphing, dan jangan memunculkan objek tambahan yang tidak diperlukan.
 
-    accessForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+TIMELINE & SCENE:
+0:00-0:02: Intro cinematic ${product}.
+0:02-0:04: Close-up detail material.
+0:04-0:06: Demonstrasi penggunaan natural (hanya tangan jika ada).
+0:06-0:08: Transisi aesthetic menyorot kepraktisan.
+0:08-0:09: Lifestyle placement ${product}.
+0:09-0:10: Final shot statis elegan.
 
-      if (accessCode.value.trim().toLowerCase() === ACCESS_CODE) {
-        lockScreen.classList.add("hidden");
-        app.classList.remove("hidden");
-        window.scrollTo(0, 0);
-      } else {
-        error.textContent = "Kode akses salah. Coba lagi.";
-        accessCode.select();
-      }
-    });
+AUDIO (ASMR):
+- Tambahkan suara ASMR yang sinkron dengan interaksi visual pada ${product}.
+- Pilih SFX yang paling cocok: soft touch, object movement, subtle whoosh, tap, atau click.
+- Audio harus realistic, subtle, satisfying, dan tidak berlebihan.
+- TIDAK ADA voice-over (VO).
 
-    // STEP 01 — storyboard prompt
-    let selectedStyle = "UGC Natural Hand Review";
+VISUAL TAMBAHAN (DOODLE & TEXT):
+- Munculkan elemen visual doodle yang digambar tangan (handwritten arrow, circle, sparkle, underline).
+- Tambahkan short feature callout berbahasa Indonesia yang aman berdasarkan visual (contoh: "Clean Design", "Minimalist", "Elegant", "Easy to Wear"). Jangan membuat klaim spesifikasi yang tidak diketahui.`;
 
-    document.querySelectorAll(".style-card").forEach(card => {
-      card.addEventListener("click", () => {
-        document.querySelectorAll(".style-card").forEach(c => c.classList.remove("selected"));
-        card.classList.add("selected");
-        selectedStyle = card.dataset.style;
-      });
-    });
-
-    document.getElementById("storyboardBtn").addEventListener("click", () => {
-      const product = document.getElementById("productName").value.trim();
-
-      if (!product) {
-        alert("Ketik nama barang terlebih dahulu.");
-        document.getElementById("productName").focus();
-        return;
-      }
-
-      const prompt = `Create ONE polished 10-second vertical 9:16 product-review storyboard for the product: "${product}".
-
-Style: ${selectedStyle}.
-
-IMPORTANT:
-- Use the product name as the exact subject.
-- Design 6 sequential frames covering the full 10 seconds.
-- Keep the same product identity, shape, proportions, colors, materials, packaging and important details across every frame.
-- Make the storyboard look like a practical content-production reference sheet.
-- Include numbered frames 1–6 and exact timestamps:
-  1. 0:00–0:02
-  2. 0:02–0:04
-  3. 0:04–0:06
-  4. 0:06–0:08
-  5. 0:08–0:09
-  6. 0:09–0:10
-- Every frame must use a different useful camera angle or action.
-- Include short Indonesian text describing the shot under each frame.
-- Add a small VIBE & STYLE section.
-- Add an ASMR SFX section with sounds such as packaging, touch, movement, click or notification where appropriate.
-- No human face is required. Hands may appear naturally.
-- Make it visually clear, realistic, commercial and suitable for an affiliate video.
-- Output as ONE complete storyboard sheet, not six unrelated images.`;
-
-      document.getElementById("storyboardPrompt").textContent = prompt;
-      document.getElementById("storyboardOutput").classList.add("show");
-      document.getElementById("storyboardOutput").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-
-    function goToStep2() {
-      document.getElementById("step2").classList.remove("locked");
-      document.getElementById("step2").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    // STEP 02 — actual uploads are now required only at the video stage
-    const productFile = document.getElementById("productFile");
-    const storyFile = document.getElementById("storyFile");
-    const productPreview = document.getElementById("productPreview");
-    const storyPreview = document.getElementById("storyPreview");
-    const productUploadText = document.getElementById("productUploadText");
-    const storyUploadText = document.getElementById("storyUploadText");
-    const videoBtn = document.getElementById("videoBtn");
-
-    function setupPreview(input, preview, text) {
-      input.addEventListener("change", () => {
-        const file = input.files[0];
-        if (!file) return;
-
-        preview.src = URL.createObjectURL(file);
-        preview.classList.remove("hidden");
-        text.classList.add("hidden");
-        checkVideoReady();
-      });
-    }
-
-    setupPreview(productFile, productPreview, productUploadText);
-    setupPreview(storyFile, storyPreview, storyUploadText);
-
-    function checkVideoReady() {
-      videoBtn.disabled = !(productFile.files.length && storyFile.files.length);
-    }
-
-    videoBtn.addEventListener("click", () => {
-      const product = document.getElementById("productName").value.trim() || "the product";
-
-      const prompt = `Create a 10-second vertical 9:16 cinematic affiliate product video using BOTH attached reference images:
-1. The real product photo — use this as the source of truth for exact product identity.
-2. The 6-frame storyboard — use this as the source of truth for sequence, composition and timing.
-
-Product: "${product}".
-
-Follow the storyboard sequentially:
-0:00–0:02 — hook / hero product shot.
-0:02–0:04 — close-up detail or key feature.
-0:04–0:06 — alternate camera angle showing the product in use.
-0:06–0:08 — texture, material, flexibility or important detail.
-0:08–0:09 — clean beauty/product shot.
-0:09–0:10 — final hero shot with a strong visual ending.
-
-Keep the EXACT same product throughout the video. Do not redesign, morph, replace or change the product. Preserve its shape, proportions, colors, materials, logo, packaging and details.
-
-Use realistic physical motion, natural hand movement if hands are present, smooth camera movement, realistic lighting and shadows. No talking head, no visible face, no random text generation, no extra products and no visual artifacts.
-
-The result should feel like a premium but natural faceless affiliate product review.`;
-
-      document.getElementById("videoPrompt").textContent = prompt;
-      document.getElementById("videoOutput").classList.add("show");
-      document.getElementById("videoOutput").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-
-    function copyText(elementId, button) {
-      const text = document.getElementById(elementId).textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const old = button.textContent;
-        button.textContent = "✓ Copied";
-        button.style.color = "#2e7d32";
-        setTimeout(() => {
-          button.textContent = old;
-          button.style.color = "";
-        }, 1400);
-      });
-    }, 1400);
-      });
-    }
-  </script>
+            document.getElementById('video-prompt').innerText = promptText;
+            document.getElementById('output-step-2').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
