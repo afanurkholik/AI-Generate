@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Affiliate Content System</title>
+  <meta name="description" content="AI Affiliate Content System — buat konten affiliate faceless dari satu foto produk." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f7f5;
+      --surface-2: #f0f0ed;
+      --text: #111111;
+      --muted: #737373;
+      --border: #e6e6e2;
+      --accent: #111111;
+      --accent-hover: #2b2b2b;
+      --success: #2e7d32;
+      --radius: 22px;
+      --shadow: 0 20px 60px rgba(0,0,0,.07);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input { font: inherit; }
+
+    button { cursor: pointer; }
+
+    .hidden { display: none !important; }
+
+    /* LOCK SCREEN */
+    .lock-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, #f3f3ef 0, transparent 32%),
+        radial-gradient(circle at 80% 80%, #f5f5f2 0, transparent 32%),
+        #fff;
+    }
+
+    .lock-card {
+      width: min(430px, 100%);
+      text-align: center;
+      padding: 48px 34px 36px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: rgba(255,255,255,.88);
+      box-shadow: var(--shadow);
+    }
+
+    .logo-mark {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 24px;
+      border-radius: 17px;
+      background: #111;
+      color: white;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, .brand {
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .lock-card h1 {
+      margin: 9px 0 10px;
+      font-size: clamp(30px, 7vw, 44px);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .lock-card p {
+      margin: 0 auto 28px;
+      color: var(--muted);
+      max-width: 330px;
+    }
+
+    .code-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .code-input {
+      width: 100%;
+      border: 1px solid var(--border);
+      outline: none;
+      border-radius: 15px;
+      padding: 15px 16px;
+      text-align: center;
+      letter-spacing: .12em;
+      background: #fafaf8;
+      transition: .2s ease;
+    }
+
+    .code-input:focus {
+      border-color: #aaa;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(0,0,0,.04);
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 15px;
+      padding: 15px 18px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      background: var(--accent-hover);
+      box-shadow: 0 10px 25px rgba(0,0,0,.14);
+    }
+
+    .error {
+      min-height: 22px;
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* APP */
+    .app { min-height: 100vh; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(230,230,226,.8);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      width: min(1180px, calc(100% - 40px));
+      height: 74px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
+
+    .brand span { color: #8b8b87; }
+
+    .nav-badge {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .hero {
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 85px 0 65px;
+    }
+
+    .hero h1 {
+      max-width: 920px;
+      margin: 16px auto 22px;
+      font-size: clamp(48px, 8vw, 92px);
+      line-height: .95;
+      letter-spacing: -.065em;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #8d8d88;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto 30px;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 13px 18px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .hero-btn.dark {
+      border-color: #111;
+      background: #111;
+      color: white;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.08);
+    }
+
+    section { padding: 55px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 7px 0 0;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .section-head p {
+      max-width: 440px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .step {
+      min-height: 245px;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: white;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .step:hover {
+      transform: translateY(-6px);
+      border-color: #d0d0cb;
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--surface);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 55px;
+    }
+
+    .step h3 {
+      margin: 0 0 7px;
+      font-size: 21px;
+      letter-spacing: -.035em;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .generator {
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: clamp(22px, 4vw, 45px);
+      background: var(--surface);
+    }
+
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .panel h3 {
+      margin: 0 0 6px;
+      font-size: 21px;
+    }
+
+    .panel-desc {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 20px;
+    }
+
+    .upload {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1.5px dashed #cfcfca;
+      border-radius: 17px;
+      background: #fafaf8;
+      padding: 20px;
+      transition: .2s ease;
+    }
+
+    .upload:hover {
+      border-color: #999;
+      background: #f5f5f2;
+    }
+
+    .upload-icon {
+      font-size: 35px;
+      margin-bottom: 8px;
+    }
+
+    .upload strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .upload small { color: var(--muted); }
+
+    .file-input { display: none; }
+
+    .choose-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #111;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .choose-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.14);
+    }
+
+    .preview {
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 14px;
+      object-fit: contain;
+    }
+
+    .options {
+      display: grid;
+      gap: 13px;
+      margin-bottom: 18px;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: .2s ease;
+    }
+
+    .option-row:hover {
+      border-color: #bbb;
+      background: #fafaf8;
+    }
+
+    select {
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 10px;
+      padding: 8px 10px;
+      outline: none;
+    }
+
+    .generate-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      background: #111;
+      color: white;
+      padding: 14px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.13);
+    }
+
+    .output {
+      margin-top: 22px;
+      display: none;
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+    }
+
+    .output.show { display: block; }
+
+    .result-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: #fafaf8;
+      margin-top: 12px;
+    }
+
+    .result-card h4 {
+      margin: 0 0 7px;
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .result-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .prompt-box {
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #151515;
+      color: #f5f5f5;
+      font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow: auto;
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 10px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .copy-btn:hover { background: #f1f1ee; }
+
+    .notice {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      padding: 35px 0 50px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 850px) {
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .generator-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-inner, main { width: min(100% - 28px, 1180px); }
+      .nav { position: relative; }
+      .hero { padding: 65px 0 45px; min-height: auto; }
+      .hero h1 { font-size: 50px; }
+      .steps { grid-template-columns: 1fr; }
+      section { padding: 38px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PASSWORD / TESTING SCREEN -->
+  <div id="lockScreen" class="lock-screen">
+    <div class="lock-card">
+      <div class="logo-mark">AI</div>
+      <div class="eyebrow">Private Preview</div>
+      <h1>AI Affiliate<br>Content System</h1>
+      <p>Masukkan kode akses untuk mencoba prototype.</p>
+
+      <form id="accessForm">
+        <div class="code-wrap">
+          <input
+            id="accessCode"
+            class="code-input"
+            type="password"
+            placeholder="Masukkan kode"
+            autocomplete="off"
+            autofocus
+          />
+        </div>
+        <button class="primary-btn" type="submit">Masuk ke Prototype →</button>
+        <div id="error" class="error"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app hidden">
+
+    <nav class="nav">
+      <div class="nav-inner">
+        <div class="brand">AI Affiliate <span>System</span></div>
+        <div class="nav-badge">Prototype v0.1</div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Faceless affiliate content</div>
+          <h1>One product.<br><em>Many possibilities.</em></h1>
+          <p>
+            Ubah satu foto produk menjadi konsep, storyboard, dan prompt video
+            menggunakan AI — tanpa shooting dan tanpa perlu tampil di kamera.
+          </p>
+          <div class="hero-actions">
+            <button class="hero-btn dark" onclick="document.getElementById('generator').scrollIntoView()">Coba Generator ↓</button>
+            <button class="hero-btn" onclick="document.getElementById('how').scrollIntoView()">Lihat Cara Kerja</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Simple workflow</div>
+            <h2>Empat langkah.<br>Selesai.</h2>
+          </div>
+          <p>
+            Sistem ini dirancang untuk menghilangkan bagian paling ribet dari
+            produksi konten affiliate.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Upload</h3>
+            <p>Masukkan satu foto produk yang ingin kamu promosikan.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Storyboard</h3>
+            <p>AI membuat konsep visual dan prompt gambar dengan berbagai angle.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>Video Prompt</h3>
+            <p>Storyboard diubah menjadi prompt video siap digunakan.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">04</div>
+            <h3>Generate</h3>
+            <p>Gunakan storyboard dan prompt tersebut di Google Flow untuk membuat video.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="generator">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Prototype</div>
+            <h2>Content<br>Generator.</h2>
+          </div>
+          <p>Upload foto produk untuk mencoba simulasi workflow.</p>
+        </div>
+
+        <div class="generator">
+          <div class="generator-grid">
+
+            <div class="panel">
+              <h3>01. Product</h3>
+              <p class="panel-desc">Upload foto produk kamu.</p>
+
+              <label class="upload" id="uploadArea">
+                <div id="uploadEmpty">
+                  <div class="upload-icon">＋</div>
+                  <strong>Drop your product here</strong>
+                  <small>PNG, JPG atau WEBP</small><br>
+                  <span class="choose-btn">Pilih Foto</span>
+                </div>
+
+                <img id="preview" class="preview hidden" alt="Preview produk">
+                <input id="fileInput" class="file-input" type="file" accept="image/*">
+              </label>
+            </div>
+
+            <div class="panel">
+              <h3>02. Content</h3>
+              <p class="panel-desc">Tentukan gaya konten yang ingin dibuat.</p>
+
+              <div class="options">
+                <div class="option-row">
+                  <span>Content Style</span>
+                  <select id="style">
+                    <option>Product Showcase</option>
+                    <option>Lifestyle</option>
+                    <option>UGC Faceless</option>
+                    <option>Luxury</option>
+                    <option>Problem → Solution</option>
+                    <option>Minimalist</option>
+                  </select>
+                </div>
+
+                <div class="option-row">
+                  <span>Jumlah konsep</span>
+                  <select id="count">
+                    <option value="3">3 konsep</option>
+                    <option value="5" selected>5 konsep</option>
+                    <option value="10">10 konsep</option>
+                  </select>
+                </div>
+              </div>
+
+              <button id="generateBtn" class="generate-btn">✨ Generate Content</button>
+
+              <div id="output" class="output">
+                <div class="eyebrow">Generated preview</div>
+
+                <div class="result-card">
+                  <h4 id="resultTitle">Concept 01 — Product Showcase</h4>
+                  <p id="resultText">
+                    Cinematic close-up product shot, clean premium environment,
+                    natural lighting, slow camera movement, realistic product details.
+                  </p>
+
+                  <div class="prompt-box" id="promptText">
+Create a premium cinematic product showcase. Keep the exact product identity, shape, proportions, logo placement and packaging details from the reference image. Use a clean minimal environment, realistic lighting, natural shadows, macro close-up, shallow depth of field, high-end commercial photography, vertical 9:16 composition.
+                  </div>
+
+                  <button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
+                </div>
+
+                <div class="result-card">
+                  <h4>🎬 Next step</h4>
+                  <p>
+                    Setelah storyboard dibuat di GPT/Gemini, upload storyboard
+                    ke workflow berikutnya untuk menghasilkan video prompt.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="notice">
+            Prototype ini masih menggunakan simulasi output. AI API dapat
+            dihubungkan pada tahap berikutnya.
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>© 2026 AI Affiliate Content System · Prototype</div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const ACCESS_CODE = "testing";
+
+    const lockScreen = document.getElementById("lockScreen");
+    const app = document.getElementById("app");
+    const accessForm = document.getElementById("accessForm");
+    const accessCode = document.getElementById("accessCode");
+    const error = document.getElementById("error");
+
+    accessForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (accessCode.value.trim().toLowerCase() === ACCESS_CODE) {
+        lockScreen.classList.add("hidden");
+        app.classList.remove("hidden");
+        window.scrollTo(0, 0);
+      } else {
+        error.textContent = "Kode akses salah. Coba lagi.";
+        accessCode.select();
+      }
+    });
+
+    const fileInput = document.getElementById("fileInput");
+    const uploadArea = document.getElementById("uploadArea");
+    const preview = document.getElementById("preview");
+    const uploadEmpty = document.getElementById("uploadEmpty");
+
+    uploadArea.addEventListener("click", (e) => {
+      if (e.target.tagName !== "BUTTON") fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.classList.remove("hidden");
+      uploadEmpty.classList.add("hidden");
+    });
+
+    // Drag & drop
+    ["dragenter", "dragover"].forEach(eventName => {
+      uploadArea.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = "#777";
+        uploadArea.style.background = "#f1f1ee";
+      });
+    });
+
+    ["dragleave", "drop"].forEach(eventName => {
+      uploadArea.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = "";
+        uploadArea.style.background = "";
+      });
+    });
+
+    uploadArea.addEventListener("drop", (e) => {
+      const file = e.dataTransfer.files[0];
+      if (!file || !file.type.startsWith("image/")) return;
+
+      fileInput.files = e.dataTransfer.files;
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.classList.remove("hidden");
+      uploadEmpty.classList.add("hidden");
+    });
+
+    document.getElementById("generateBtn").addEventListener("click", () => {
+      const output = document.getElementById("output");
+      const style = document.getElementById("style").value;
+      const count = document.getElementById("count").value;
+
+      if (!fileInput.files.length) {
+        alert("Upload foto produk terlebih dahulu.");
+        return;
+      }
+
+      const title = `Concept 01 — ${style}`;
+      const prompt = `Create a ${style.toLowerCase()} affiliate product video storyboard based on the uploaded reference product. Generate ${count} content concepts. Preserve the exact product identity, shape, proportions, packaging, logo placement, colors and important details. Use a vertical 9:16 composition, realistic lighting, natural shadows, commercial-quality photography and multiple cinematic camera angles. Each concept should be suitable for a 10-second faceless affiliate video.`;
+
+      document.getElementById("resultTitle").textContent = title;
+      document.getElementById("resultText").textContent =
+        `${count} concept${count > 1 ? "s" : ""} dengan gaya ${style.toLowerCase()} berhasil dibuat. Ini adalah simulasi output untuk prototype.`;
+      document.getElementById("promptText").textContent = prompt;
+
+      output.classList.add("show");
+      output.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    function copyPrompt() {
+      const text = document.getElementById("promptText").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        const old = btn.textContent;
+        btn.textContent = "✓ Copied";
+        btn.style.color = "#2e7d32";
+        setTimeout(() => {
+          btn.textContent = old;
+          btn.style.color = "";
+        }, 1400);
+      });
+    }
+  </script>
+</body>
+</html>
