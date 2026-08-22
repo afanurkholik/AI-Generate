@@ -357,17 +357,17 @@
             <div class="workflow-item">
                 <div class="workflow-step">02</div>
                 <h4>Buat Storyboard</h4>
-                <p>AI membuat prompt storyboard 6 panel untuk video 10 detik.</p>
+                <p>AI membuat prompt storyboard 6 panel ala infografis premium.</p>
             </div>
             <div class="workflow-item">
                 <div class="workflow-step">03</div>
                 <h4>Buat Prompt Video</h4>
-                <p>Gunakan storyboard untuk menghasilkan prompt video aesthetic lengkap dengan ASMR dan doodle.</p>
+                <p>Prompt video aesthetic lengkap dengan ASMR dan doodle.</p>
             </div>
             <div class="workflow-item">
                 <div class="workflow-step">04</div>
-                <h4>Generate di Google Flow</h4>
-                <p>Masukkan storyboard dan prompt ke Google Flow.</p>
+                <h4>Generate di AI</h4>
+                <p>Masukkan prompt ke AI Generator andalanmu.</p>
             </div>
         </div>
 
@@ -377,17 +377,23 @@
             
             <div class="input-group">
                 <label>Nama Produk</label>
-                <input type="text" id="product-input-1" placeholder="Contoh: botol minum">
+                <input type="text" id="product-input-1" placeholder="Contoh: Lunch Box 2 Tingkat">
             </div>
             
             <div class="input-group">
-                <label>Style (Opsional)</label>
+                <label>Style Vibe</label>
                 <select id="style-input">
-                    <option value="UGC Natural">UGC Natural</option>
-                    <option value="Product Showcase">Product Showcase</option>
-                    <option value="Lifestyle">Lifestyle</option>
-                    <option value="Minimalist">Minimalist</option>
+                    <option value="UGC Natural">UGC Natural (Hangat & Clean)</option>
+                    <option value="Product Showcase">Product Showcase (Modern & Terang)</option>
+                    <option value="Lifestyle Aesthetic">Lifestyle Aesthetic (Pinterest Vibe)</option>
+                    <option value="Minimalist Studio">Minimalist Studio (Background Polos)</option>
                 </select>
+            </div>
+
+            <!-- Tambahan Input Warna -->
+            <div class="input-group">
+                <label>Tema Warna (Opsional)</label>
+                <input type="text" id="color-input" placeholder="Contoh: Warm Brown, Pastel, Clean Beige...">
             </div>
 
             <button class="btn mb-2" onclick="generateStoryboard()">✨ Buat Prompt Storyboard</button>
@@ -425,7 +431,7 @@
 
             <div class="input-group">
                 <label>Nama Produk</label>
-                <input type="text" id="product-input-2" placeholder="Contoh: Kabel Fast Charging 100W">
+                <input type="text" id="product-input-2" placeholder="Otomatis terisi dari Step 01">
             </div>
 
             <button class="btn mb-2" onclick="generateVideoPrompt()">🎬 Buat Prompt Video</button>
@@ -433,7 +439,7 @@
             <!-- Output Step 2 -->
             <div id="output-step-2" class="hidden mt-4" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
                 <div class="success-text">✓ Prompt Video Siap</div>
-                <p class="text-muted mb-2 font-heading" style="font-size: 0.9rem;">Siap digunakan di Google Flow.</p>
+                <p class="text-muted mb-2 font-heading" style="font-size: 0.9rem;">Siap digunakan di AI Video Generator.</p>
                 
                 <div id="video-prompt" class="prompt-box"></div>
                 
@@ -441,7 +447,7 @@
 
                 <div class="simple-workflow">
                     <span>01 Salin Prompt</span> →
-                    <span>02 Buka Google Flow</span> →
+                    <span>02 Buka Video Generator</span> →
                     <span>03 Masukkan Storyboard</span> →
                     <span>04 Generate Video</span>
                 </div>
@@ -503,29 +509,36 @@
         function generateStoryboard() {
             const product = document.getElementById('product-input-1').value || "produk";
             const style = document.getElementById('style-input').value;
+            const color = document.getElementById('color-input').value || "neutral pastel";
             
-            const promptText = `Buatkan gambar production storyboard yang berisi 6 panel untuk referensi video affiliate vertikal berdurasi 10 detik. Produk utama: ${product}.
+            const promptText = `Create a highly detailed, premium aesthetic storyboard infographic poster for a 10-second vertical affiliate video. Main product: ${product}.
 
-STYLE & VISUAL:
-- Style visual: ${style}, clean product photography.
-- Fokus utama 100% pada ${product}.
-- Faceless (tanpa wajah). Tangan manusia boleh muncul secara aesthetic hanya jika relevan untuk memegang atau menggunakan ${product}.
-- Tambahkan handwritten doodle annotations (seperti panah, lingkaran, bintang, underline) pada setiap panel.
-- Tambahkan caption pendek text berbahasa Indonesia yang mendeskripsikan vibe/fitur secara general (contoh: "Minimalist", "Clean Design", "Daily Use", "Praktis"). Jangan menggunakan klaim spesifikasi khusus kecuali disebutkan di nama produk.
-- Layout: 6 panel berurutan dalam SATU gambar.
-- Tuliskan timestamp di pojok tiap panel.
-- Jaga konsistensi bentuk ${product} di seluruh panel.
+LAYOUT & COMPOSITION (CRITICAL):
+- Format: A complete digital marketing infographic poster layout.
+- Overall Color Palette: ${color} theme.
+- Top Header: A stylish decorative banner at the very top containing bold typography "STORYBOARD UGC REVIEW" and the product name "${product}".
+- Main Grid: Below the header, a perfectly aligned 3x2 grid consisting of 6 sequential storyboard panels.
+- Bottom Footer: A minimalist info section at the bottom containing small icons and UI elements for "Detail Video", "Durasi", and "Tips Creator".
 
-STRUKTUR PANEL:
-Panel 1 — 0:00-0:02: Establishing shot ${product} dengan latar belakang aesthetic. Teks doodle pembuka.
-Panel 2 — 0:02-0:04: Close-up ekstrem menunjukkan detail tekstur atau material dari ${product}.
-Panel 3 — 0:04-0:06: Action shot natural (faceless), menunjukkan ${product} sedang disentuh/digunakan.
-Panel 4 — 0:06-0:08: Angle kreatif yang menyorot bentuk atau kepraktisan ${product}.
-Panel 5 — 0:08-0:09: Lifestyle shot, menempatkan ${product} di lingkungan sehari-hari yang natural.
-Panel 6 — 0:09-0:10: Final commercial beauty shot ${product} dengan ruang kosong untuk teks promosi.
+STYLE & VIBE:
+- Aesthetic: ${style}, premium commercial product photography, high-end Pinterest lifestyle vibe. Soft, warm natural lighting.
+- Subject Focus: Faceless UGC style (only aesthetic hands interacting with the product).
 
-VIBE & ASMR SFX (untuk referensi mood):
-Aesthetic, natural, commercial, soft lighting. Suara ASMR: pergerakan objek yang halus, sentuhan natural, dan interaksi yang memuaskan dengan ${product}.`;
+RICH UI & ANNOTATIONS (MAGAZINE STYLE):
+- Doodles: Add dynamic, cute hand-drawn style doodles (arrows, dashed lines, sparkles, tiny hearts, checkmarks) in white and bright accent colors overlapping the panels and background.
+- Panel UI: In the top left corner of each panel, add a modern timestamp badge (e.g., "0:00-0:02").
+- Captions: At the bottom of EVERY single panel, add a clean, rounded soft-colored text box containing a short Indonesian benefit text (e.g., "Kapasitas Besar", "Sangat Praktis", "Desain Estetik").
+- SFX Notes: Right below each caption text box, add a tiny colored text note for sound effects (e.g., "SFX: Click!", "SFX: Soft zip", "SFX: Tap tap").
+
+SCENE PROGRESSION:
+Panel 1: Establishing aesthetic lifestyle shot of the ${product}.
+Panel 2: Close-up demonstrating a specific feature, material texture, or opening mechanism.
+Panel 3: Wide angle showing the ${product}'s capacity, size, or main function.
+Panel 4: Detailed action shot focusing on real-life usage.
+Panel 5: Lifestyle placement showing the ${product} ready to be carried or used seamlessly.
+Panel 6: Final commercial beauty shot with a strong "Check out now!" CTA vibe.
+
+Render in 8k resolution, ultra-detailed, flat lay UI/UX design presentation style.`;
 
             document.getElementById('storyboard-prompt').innerText = promptText;
             document.getElementById('output-step-1').classList.remove('hidden');
@@ -535,31 +548,30 @@ Aesthetic, natural, commercial, soft lighting. Suara ASMR: pergerakan objek yang
         function generateVideoPrompt() {
             const product = document.getElementById('product-input-2').value || "produk";
             
-            const promptText = `Animasikan gambar storyboard 6 panel ini menjadi video vertikal (9:16) berdurasi 10 detik untuk produk: ${product}.
+            const promptText = `Animate this 6-panel aesthetic infographic storyboard into a seamless, high-converting vertical (9:16) 10-second affiliate video for: ${product}.
 
-INSTRUKSI VISUAL UTAMA:
-- Cinematic, aesthetic, realistic, faceless (tanpa wajah), product-focused.
-- Gunakan smooth camera movement dan pergerakan natural.
-- Soft lighting dengan realistic shadows.
-- JAGA KONSISTENSI PRODUK: Ikuti storyboard secara berurutan. Jangan mengubah bentuk produk, jangan mengganti produk, jangan membuat produk morphing, dan jangan memunculkan objek tambahan yang tidak diperlukan.
+VISUAL DIRECTION:
+- Vibe: Cinematic, aesthetic, realistic, faceless UGC, Pinterest-style product showcase.
+- Camera: Smooth, organic camera movement (subtle pans, soft zooms) mimicking high-end smartphone cinematography.
+- Lighting: Soft natural sunlight, realistic depth of field.
+- Consistency: Strictly follow the storyboard progression. Keep the product design, shape, and color 100% consistent across all scenes. No morphing.
 
-TIMELINE & SCENE:
-0:00-0:02: Intro cinematic ${product}.
-0:02-0:04: Close-up detail material.
-0:04-0:06: Demonstrasi penggunaan natural (hanya tangan jika ada).
-0:06-0:08: Transisi aesthetic menyorot kepraktisan.
-0:08-0:09: Lifestyle placement ${product}.
-0:09-0:10: Final shot statis elegan.
+TIMELINE & SCENE FLOW:
+0:00-0:02: Establishing lifestyle shot of ${product} in an aesthetic setting.
+0:02-0:04: Extreme close-up showing texture, material, or mechanism.
+0:04-0:06: Natural usage demonstration (only aesthetic hands visible).
+0:06-0:08: Creative angle highlighting practicality or capacity.
+0:08-0:09: Beautiful lifestyle placement (e.g., on a clean desk or being carried).
+0:09-0:10: Final elegant static shot for the Call-To-Action overlay.
 
-AUDIO (ASMR):
-- Tambahkan suara ASMR yang sinkron dengan interaksi visual pada ${product}.
-- Pilih SFX yang paling cocok: soft touch, object movement, subtle whoosh, tap, atau click.
-- Audio harus realistic, subtle, satisfying, dan tidak berlebihan.
-- TIDAK ADA voice-over (VO).
+AUDIO (CRUCIAL ASMR):
+- Add hyper-realistic ASMR sound effects synchronized with visual interactions on the ${product}.
+- Layer soft sounds: gentle fabric rustle, subtle click, soft tap, satisfying whoosh.
+- Must feel satisfying, subtle, and premium. NO background music, NO voice-over (VO).
 
-VISUAL TAMBAHAN (DOODLE & TEXT):
-- Munculkan elemen visual doodle yang digambar tangan (handwritten arrow, circle, sparkle, underline).
-- Tambahkan short feature callout berbahasa Indonesia yang aman berdasarkan visual (contoh: "Clean Design", "Minimalist", "Elegant", "Easy to Wear"). Jangan membuat klaim spesifikasi yang tidak diketahui.`;
+MOTION GRAPHICS (DOODLES & TEXT):
+- Animate hand-drawn style doodles (arrows drawing themselves, sparkles popping, underlines tracing).
+- Animate soft pop-up feature callouts in Indonesian (e.g., "Praktis!", "Desain Estetik").`;
 
             document.getElementById('video-prompt').innerText = promptText;
             document.getElementById('output-step-2').classList.remove('hidden');
