@@ -9,142 +9,223 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fafafa;
+            --bg-color: #f8fafc;
             --surface-color: #ffffff;
-            --text-main: #111111;
-            --text-muted: #666666;
-            --border-color: #eaeaea;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
             --accent-color: #0f172a;
-            --accent-hover: #1e293b;
-            --code-bg: #1a1a1a;
-            --code-text: #f4f4f4;
-            --radius: 12px;
+            --accent-hover: #334155;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+            --radius: 16px;
             --radius-sm: 8px;
-            --transition: all 0.3s ease;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
         h1, h2, h3, h4, .font-heading { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
-        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        
+        .container { max-width: 850px; margin: 0 auto; padding: 2rem; }
         .hidden { display: none !important; }
-        .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; } .mt-3 { margin-top: 1.5rem; }
+        .mb-2 { margin-bottom: 0.5rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2.5rem; } .mt-3 { margin-top: 1.5rem; }
         
-        .card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .step-badge { display: inline-block; background: var(--accent-color); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; }
+        /* ACCESS PAGE */
+        #access-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
+        .access-card { background: var(--surface-color); padding: 3rem; border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 450px; }
         
-        input[type="text"], select { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; margin-top: 0.5rem; }
-        .input-group { margin-bottom: 1.2rem; }
-        .input-group label { font-weight: 500; font-size: 0.9rem; }
+        /* CARDS & UI */
+        .card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: var(--transition); }
+        .card:hover { box-shadow: 0 12px 24px rgba(0,0,0,0.06); transform: translateY(-2px); border-color: #cbd5e1; }
+        .step-badge { display: inline-block; background: var(--text-main); color: white; padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1.2rem; letter-spacing: 1px; }
         
-        .btn { display: inline-block; width: 100%; padding: 1rem; background-color: var(--accent-color); color: white; border: none; border-radius: var(--radius-sm); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition); text-align: center; }
-        .btn:hover { background-color: var(--accent-hover); }
-        .btn-outline { background-color: transparent; color: var(--accent-color); border: 1px solid var(--border-color); }
+        /* FORMS */
+        input[type="text"], input[type="password"], select { width: 100%; padding: 1rem 1.2rem; border: 2px solid var(--border-color); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 1rem; margin-top: 0.5rem; transition: var(--transition); background-color: #f8fafc; color: var(--text-main); }
+        input:focus, select:focus { outline: none; border-color: var(--accent-color); background-color: var(--surface-color); }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { font-weight: 700; font-size: 0.95rem; color: var(--text-main); display: block; }
+        .custom-input { animation: slideDown 0.3s ease-out forwards; transform-origin: top; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* BUTTONS */
+        .btn { display: inline-block; width: 100%; padding: 1.2rem; background-color: var(--accent-color); color: white; border: none; border-radius: var(--radius-sm); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: var(--transition); text-align: center; }
+        .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(15, 23, 42, 0.2); }
+        .btn-outline { background-color: transparent; color: var(--accent-color); border: 2px solid var(--text-main); }
+        .btn-outline:hover { background-color: var(--bg-color); color: var(--text-main); box-shadow: none; transform: none; }
         
-        .prompt-box { background-color: var(--code-bg); color: var(--code-text); padding: 1.5rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; margin: 1rem 0; border: 1px solid #333; }
-        .instruction-box { background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 1rem 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; font-size: 0.9rem; }
-        .instruction-box a { color: #3b82f6; font-weight: 700; text-decoration: none; }
+        /* PROMPT BOX & INSTRUCTIONS */
+        .prompt-box { background-color: var(--code-bg); color: var(--code-text); padding: 2rem; border-radius: var(--radius-sm); font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; white-space: pre-wrap; margin: 1.5rem 0; border: 1px solid #000; max-height: 500px; overflow-y: auto; line-height: 1.6; }
+        .instruction-box { background-color: #eff6ff; border-left: 5px solid #3b82f6; padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1.5rem 0; font-size: 1rem; color: #1e3a8a; }
+        .instruction-box a { color: #2563eb; font-weight: 700; text-decoration: underline; }
         
-        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 0; }
-        .spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+        /* LOADER */
+        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 0; }
+        .spinner { width: 50px; height: 50px; border: 4px solid #e2e8f0; border-top: 4px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1.5rem; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .success-text { color: #10b981; font-weight: 700; font-family: 'Space Grotesk', sans-serif; text-align: center; font-size: 1.5rem; margin-top: 2rem; }
+        .success-text { color: #059669; font-weight: 700; font-family: 'Space Grotesk', sans-serif; text-align: center; font-size: 2rem; margin-top: 2rem; background: #d1fae5; padding: 1rem; border-radius: var(--radius-sm); }
+        #error-message { color: #dc2626; font-size: 0.95rem; font-weight: 700; margin-top: 1rem; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header style="text-align: center; margin-bottom: 3rem;">
-            <h2 style="color: var(--text-muted); font-size: 1.2rem;">Walik Labs</h2>
-            <h1 class="font-heading" style="font-size: 2.2rem;">AI Affiliate System</h1>
-            <p>Ikuti 4 langkah mudah ini untuk membuat video faceless.</p>
+    <!-- ACCESS PAGE -->
+    <div id="access-page">
+        <div class="access-card">
+            <h2 class="mb-2" style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 2px;">Walik Labs</h2>
+            <h1 class="font-heading mb-4" style="font-size: 2.5rem; line-height: 1.1;">AI Affiliate<br>System</h1>
+            <p class="mb-4" style="color: var(--text-muted);">Masukkan kode akses premium Anda untuk melanjutkan.</p>
+            
+            <div class="input-group" style="text-align: left;">
+                <label>Kode Akses</label>
+                <input type="password" id="access-code" placeholder="Ketik kode di sini...">
+            </div>
+            <button class="btn" onclick="checkAccess()">Masuk Sekarang →</button>
+            <p id="error-message" class="hidden">Kode akses salah. Silakan coba lagi.</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="main-app" class="container hidden">
+        <header style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
+            <h2 style="color: var(--text-muted); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Walik Labs Premium</h2>
+            <h1 class="font-heading" style="font-size: 3.5rem; line-height: 1.1; margin: 1rem 0;">Faceless Affiliate<br>Creator</h1>
+            <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; color: var(--text-muted);">Sistem otomatisasi untuk meracik storyboard & prompt video AI profesional tanpa perlu tampil di depan kamera.</p>
         </header>
 
-        <!-- STEP 1 -->
+        <!-- STEP 1: PROMPT STORYBOARD -->
         <section id="step-1" class="card">
             <div class="step-badge">STEP 01</div>
-            <h2 class="mb-3 font-heading">Prompt Storyboard</h2>
+            <h2 class="mb-4 font-heading" style="font-size: 2rem;">Prompt Storyboard</h2>
             
             <div class="input-group">
-                <label>Nama Produk</label>
-                <input type="text" id="product-name" placeholder="Contoh: Kabel Fast Charging">
-            </div>
-            <div class="input-group">
-                <label>Style Vibe</label>
-                <select id="style-vibe">
-                    <option value="Lifestyle Aesthetic">Lifestyle Aesthetic (Pinterest Vibe)</option>
-                    <option value="UGC Natural">UGC Natural (Clean & Hangat)</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Tema Warna</label>
-                <input type="text" id="color-theme" placeholder="Contoh: Warm Brown, Clean Beige, Elegant Dark">
+                <label>Apa nama produk yang ingin dijual?</label>
+                <input type="text" id="product-name" placeholder="Contoh: Lunch Box 2 Tingkat Anti Bocor">
             </div>
 
-            <button class="btn" onclick="generateStep1()">✨ Buat Prompt Storyboard</button>
+            <div class="input-group">
+                <label>Pilih Style Visual (Vibe)</label>
+                <select id="style-vibe" onchange="toggleCustomInput('style-vibe', 'custom-style-container')">
+                    <option value="Lifestyle Aesthetic (Pinterest Vibe)">01. Lifestyle Aesthetic (Pinterest Vibe)</option>
+                    <option value="UGC Natural (Clean & Hangat)">02. UGC Natural (Clean & Hangat)</option>
+                    <option value="Scrapbook Motion Graphic (Paper Cut)">03. Scrapbook Motion Graphic (Paper Cut)</option>
+                    <option value="Minimalist Studio (White Background)">04. Minimalist Studio (White Background)</option>
+                    <option value="Dark Mode Tech (Neon Accents)">05. Dark Mode Tech (Neon Accents)</option>
+                    <option value="Luxury Showcase (Premium & Elegant)">06. Luxury Showcase (Premium & Elegant)</option>
+                    <option value="ASMR Unboxing (Cozy & Satisfying)">07. ASMR Unboxing (Cozy & Satisfying)</option>
+                    <option value="Cinematic B-Roll (Moody & Dramatic)">08. Cinematic B-Roll (Moody & Dramatic)</option>
+                    <option value="Pop Art (Vibrant & Playful)">09. Pop Art (Vibrant & Playful)</option>
+                    <option value="Y2K Retro (Nostalgic & Grainy)">10. Y2K Retro (Nostalgic & Grainy)</option>
+                    <option value="custom">✦ Custom (Tulis Manual)</option>
+                </select>
+            </div>
+            
+            <div id="custom-style-container" class="input-group hidden custom-input">
+                <label>Tulis Style Visual Manual</label>
+                <input type="text" id="custom-style-vibe" placeholder="Contoh: Cyberpunk 2077 neon vibes, dll...">
+            </div>
+
+            <div class="input-group">
+                <label>Tema Warna Dominan (Opsional)</label>
+                <input type="text" id="color-theme" placeholder="Contoh: Warm Brown, Pastel Pink, Clean Beige...">
+            </div>
+
+            <button class="btn" onclick="generateStep1()">✨ Buat Master Prompt Storyboard</button>
 
             <div id="loading-1" class="loading-container hidden">
                 <div class="spinner"></div>
-                <p class="font-heading">AI sedang meracik instruksi storyboard...</p>
+                <h3 class="font-heading" style="font-size: 1.5rem;">AI sedang meracik Master Prompt...</h3>
+                <p style="color: var(--text-muted);">Menyusun komposisi, pencahayaan, dan detail kamera.</p>
             </div>
 
             <div id="output-1" class="hidden mt-3">
                 <div class="prompt-box" id="prompt-text-1"></div>
-                <button class="btn btn-outline" onclick="copyText('prompt-text-1', this)">Salin Prompt</button>
+                <button class="btn btn-outline" onclick="copyText('prompt-text-1', this)">Salin Prompt Storyboard</button>
             </div>
         </section>
 
-        <!-- STEP 2 -->
+        <!-- STEP 2: GENERATE STORYBOARD -->
         <section id="step-2" class="card hidden">
             <div class="step-badge">STEP 02</div>
-            <h2 class="mb-3 font-heading">Generate Storyboard</h2>
+            <h2 class="mb-3 font-heading" style="font-size: 2rem;">Generate Storyboard</h2>
             
             <div class="instruction-box">
-                <ol style="margin-left: 1.2rem; line-height: 1.8;">
-                    <li>Buka halaman AI Generator: <a href="https://labs.google/fx/tools/flow" target="_blank">https://labs.google/fx/tools/flow</a></li>
-                    <li><strong>Paste (Tempel)</strong> prompt yang sudah disalin dari Step 1.</li>
-                    <li><strong>Upload</strong> foto produk aslimu sebagai referensi.</li>
-                    <li>Setting Rasio: <strong>Bebas</strong> (sesuai kebutuhan).</li>
+                <ol style="margin-left: 1.5rem; line-height: 2; font-weight: 500;">
+                    <li>Buka halaman AI Generator: <a href="https://labs.google/fx/tools/flow" target="_blank">Google Flow Labs</a></li>
+                    <li><strong>Paste (Tempel)</strong> Master Prompt yang sudah disalin dari Step 1.</li>
+                    <li><strong>Upload</strong> foto produk aslimu sebagai referensi desain.</li>
+                    <li>Setting Rasio: <strong>Bebas</strong> (sesuai kebutuhan kanvas).</li>
                     <li>Model AI: Pilih <strong>Nano Banana Pro</strong> atau <strong>Nano Banana 2</strong>.</li>
-                    <li>Klik tombol Generate dan simpan hasil fotonya!</li>
+                    <li>Klik tombol Generate dan simpan/download hasil fotonya!</li>
                 </ol>
             </div>
             
             <button class="btn btn-outline" onclick="showStep3()">Lanjut ke Step 3 ↓</button>
         </section>
 
-        <!-- STEP 3 -->
+        <!-- STEP 3: PROMPT ANIMASI -->
         <section id="step-3" class="card hidden">
             <div class="step-badge">STEP 03</div>
-            <h2 class="mb-3 font-heading">Prompt Animasi Video</h2>
+            <h2 class="mb-4 font-heading" style="font-size: 2rem;">Prompt Animasi Video</h2>
             
-            <button class="btn btn-outline mb-3" style="font-size: 0.9rem; padding: 0.5rem;" onclick="syncData()">🔄 Ambil Data dari Step 1</button>
+            <button class="btn btn-outline mb-4" style="font-size: 0.9rem; padding: 0.8rem;" onclick="syncData()">🔄 Sinkronisasi Data dari Step 1</button>
 
             <div class="input-group">
                 <label>Nama Produk</label>
-                <input type="text" id="product-name-2" placeholder="Otomatis terisi..." readonly>
-            </div>
-            <div class="input-group">
-                <label>Style Video</label>
-                <select id="video-style">
-                    <option value="Aesthetic + Faceless">Aesthetic + Faceless (Tanpa Wajah)</option>
-                    <option value="Product Showcase">Product Showcase Fokus Detail</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Audio & Visual Tambahan</label>
-                <select id="audio-visual">
-                    <option value="ASMR + Doodle Callout">ASMR + Doodle Callout (Direkomendasikan)</option>
-                    <option value="Lofi Music + Minimalist Text">Lofi Music + Minimalist Text</option>
-                </select>
+                <input type="text" id="product-name-2" placeholder="Otomatis terisi..." readonly style="background: #e2e8f0;">
             </div>
 
-            <button class="btn" onclick="generateStep3()">🎬 Buat Prompt Video</button>
+            <div class="input-group">
+                <label>Pilih Style Video (Pergerakan)</label>
+                <select id="video-style" onchange="toggleCustomInput('video-style', 'custom-video-container')">
+                    <option value="Aesthetic + Faceless (Tanpa Wajah)">01. Aesthetic + Faceless (Tanpa Wajah)</option>
+                    <option value="Product Showcase Fokus Detail">02. Product Showcase Fokus Detail</option>
+                    <option value="Stop Motion / Claymation Style">03. Stop Motion / Claymation Style</option>
+                    <option value="Cinematic Smooth Pan & Zoom">04. Cinematic Smooth Pan & Zoom</option>
+                    <option value="Fast-paced Trendy Edit (TikTok Style)">05. Fast-paced Trendy Edit (TikTok Style)</option>
+                    <option value="Slow-mo Satisfying Reveal">06. Slow-mo Satisfying Reveal</option>
+                    <option value="Isometric 3D Angle">07. Isometric 3D Angle</option>
+                    <option value="Vintage Film / Super 8 Look">08. Vintage Film / Super 8 Look</option>
+                    <option value="Glitch / Futuristic Tech">09. Glitch / Futuristic Tech</option>
+                    <option value="Editorial Magazine Motion">10. Editorial Magazine Motion</option>
+                    <option value="custom">✦ Custom (Tulis Manual)</option>
+                </select>
+            </div>
+            
+            <div id="custom-video-container" class="input-group hidden custom-input">
+                <label>Tulis Style Video Manual</label>
+                <input type="text" id="custom-video-style" placeholder="Contoh: Hyper-lapse drone shot...">
+            </div>
+
+            <div class="input-group">
+                <label>Pilih Audio & Visual Tambahan</label>
+                <select id="audio-visual" onchange="toggleCustomInput('audio-visual', 'custom-audio-container')">
+                    <option value="ASMR + Doodle Callout (Direkomendasikan)">01. ASMR + Doodle Callout (Direkomendasikan)</option>
+                    <option value="Lofi Music + Minimalist Text">02. Lofi Music + Minimalist Text</option>
+                    <option value="Upbeat Pop + Dynamic Subtitles">03. Upbeat Pop + Dynamic Subtitles</option>
+                    <option value="Cinematic Ambient + Elegant Serif Text">04. Cinematic Ambient + Elegant Serif Text</option>
+                    <option value="Soft Nature Sounds + Handwritten Text">05. Soft Nature Sounds + Handwritten Text</option>
+                    <option value="No Music (Pure ASMR) + Neon Text">06. No Music (Pure ASMR) + Neon Text</option>
+                    <option value="Retro Synthwave + Glitch Text">07. Retro Synthwave + Glitch Text</option>
+                    <option value="Corporate Tech + Clean Sans-serif">08. Corporate Tech + Clean Sans-serif</option>
+                    <option value="Acoustic Guitar + Rustic Typography">09. Acoustic Guitar + Rustic Typography</option>
+                    <option value="Deep Bass + Bold Streetwear Text">10. Deep Bass + Bold Streetwear Text</option>
+                    <option value="custom">✦ Custom (Tulis Manual)</option>
+                </select>
+            </div>
+            
+            <div id="custom-audio-container" class="input-group hidden custom-input">
+                <label>Tulis Audio & Visual Manual</label>
+                <input type="text" id="custom-audio-visual" placeholder="Contoh: Jazz background with bold captions...">
+            </div>
+
+            <button class="btn" onclick="generateStep3()">🎬 Buat Master Prompt Video</button>
 
             <div id="loading-3" class="loading-container hidden">
                 <div class="spinner"></div>
-                <p class="font-heading">AI sedang menyusun penggerak kamera...</p>
+                <h3 class="font-heading" style="font-size: 1.5rem;">AI sedang menghitung pergerakan...</h3>
+                <p style="color: var(--text-muted);">Mensinkronisasi audio ASMR dengan transisi visual.</p>
             </div>
 
             <div id="output-3" class="hidden mt-3">
@@ -153,46 +234,155 @@
             </div>
         </section>
 
-        <!-- STEP 4 -->
+        <!-- STEP 4: GENERATE VIDEO -->
         <section id="step-4" class="card hidden">
             <div class="step-badge">STEP 04</div>
-            <h2 class="mb-3 font-heading">Generate Video Akhir</h2>
+            <h2 class="mb-3 font-heading" style="font-size: 2rem;">Generate Video Akhir</h2>
             
             <div class="instruction-box">
-                <ol style="margin-left: 1.2rem; line-height: 1.8;">
-                    <li>Buka kembali: <a href="https://labs.google/fx/tools/flow" target="_blank">https://labs.google/fx/tools/flow</a></li>
-                    <li><strong>Paste (Tempel)</strong> prompt animasi dari Step 3.</li>
-                    <li><strong>Upload</strong> foto storyboard yang kamu dapatkan di Step 2.</li>
-                    <li><strong>PENTING:</strong> Ubah settingan Rasio menjadi <strong>9:16</strong>.</li>
+                <ol style="margin-left: 1.5rem; line-height: 2; font-weight: 500;">
+                    <li>Buka kembali: <a href="https://labs.google/fx/tools/flow" target="_blank">Google Flow Labs</a></li>
+                    <li><strong>Paste (Tempel)</strong> Master Prompt Animasi dari Step 3.</li>
+                    <li><strong>Upload</strong> foto storyboard matang yang kamu dapatkan di Step 2.</li>
+                    <li><strong>PENTING:</strong> Ubah settingan Rasio menjadi <strong>9:16 (Vertikal)</strong>.</li>
                     <li>Model AI: Pilih <strong>Omni Flash</strong>.</li>
-                    <li>Klik Generate dan tunggu keajaibannya!</li>
+                    <li>Klik Generate dan tunggu keajaibannya selesai!</li>
                 </ol>
             </div>
 
-            <div class="success-text">✨ Selesai! Video Siap Upload ✨</div>
+            <div class="success-text">✨ Selesai! Video Siap Di-Upload ✨</div>
         </section>
 
     </div>
 
+    <!-- JAVASCRIPT -->
     <script>
+        // Access Code Logic
+        function checkAccess() {
+            const code = document.getElementById('access-code').value;
+            const errorMsg = document.getElementById('error-message');
+            
+            if(code === 'user97') {
+                document.getElementById('access-page').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('access-code').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkAccess();
+        });
+
+        // Toggle Custom Inputs
+        function toggleCustomInput(selectId, containerId) {
+            const select = document.getElementById(selectId);
+            const container = document.getElementById(containerId);
+            if(select.value === 'custom') {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function getFinalValue(selectId, inputId) {
+            const select = document.getElementById(selectId);
+            if(select.value === 'custom') {
+                return document.getElementById(inputId).value || "Custom Style";
+            }
+            return select.value;
+        }
+
+        // Copy Text
         function copyText(elementId, btn) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text);
             const original = btn.innerText;
-            btn.innerText = "✓ Tersalin!";
-            setTimeout(() => { btn.innerText = original; }, 2000);
+            btn.innerText = "✓ Teks Berhasil Disalin!";
+            btn.style.backgroundColor = "#059669";
+            btn.style.color = "#ffffff";
+            btn.style.borderColor = "#059669";
+            setTimeout(() => { 
+                btn.innerText = original;
+                btn.style.backgroundColor = "transparent";
+                btn.style.color = "var(--accent-color)";
+                btn.style.borderColor = "var(--text-main)";
+            }, 2500);
         }
 
+        // STEP 1 Logic
         function generateStep1() {
-            const product = document.getElementById('product-name').value || "Produk";
-            const style = document.getElementById('style-vibe').value;
-            const color = document.getElementById('color-theme').value || "Sesuai referensi";
+            const product = document.getElementById('product-name').value || "[Nama Produk Tidak Diisi]";
+            const style = getFinalValue('style-vibe', 'custom-style-vibe');
+            const color = document.getElementById('color-theme').value || "Sesuai dengan identitas natural produk";
             
-            const prompt = `Create a highly detailed, premium aesthetic storyboard infographic poster for a 10-second vertical affiliate video. Main product: ${product}. Layout: 3x2 grid of 6 sequential panels. Style: ${style}. Color Theme: ${color}. Include UI elements, timestamps, and short Indonesian benefit captions at the bottom of each panel.`;
+            const masterPrompt1 = `MASTER PROMPT
+VISUAL STORYBOARD AFFILIATE
+STYLE : ${style.toUpperCase()}
+
+Berperanlah sebagai Creative Director, Editorial Graphic Designer, UGC Director, Commercial Storyboard Artist, dan Prompt Engineer profesional.
+Tugasmu adalah membuat STORYBOARD VISUAL lengkap berformat infografis untuk promosi produk affiliate.
+
+====================================================
+INPUT USER
+
+1. Nama Produk : ${product}
+2. Tema Warna  : ${color}
+
+====================================================
+HASIL YANG WAJIB DIBUAT
+
+Buat storyboard visual infografis dengan layout grid 3x2 (Total 6 Panel).
+Output harus langsung berupa visual produksi komersial siap pakai, bukan sekadar list teks.
+
+====================================================
+FORMAT LAYOUT POSTER
+
+HEADER (ATAS)
+Tampilkan banner elegan berisi judul "STORYBOARD UGC REVIEW" dan nama produk "${product}".
+
+MAIN GRID (TENGAH)
+Grid 3x2 berurutan sempurna. Setiap panel memuat:
+• Label durasi di pojok (contoh: 0:00-0:02).
+• Text box membulat di bagian bawah panel berisi caption bahasa Indonesia (maksimal 4 kata).
+• Catatan SFX kecil di bawah caption (contoh: "SFX: Tap tap").
+
+FOOTER (BAWAH)
+Informasi teknis minimalis: "Durasi: 10 Detik | Rasio: 9:16 | Kamera: Smartphone 4K".
+
+====================================================
+PANDUAN VISUAL (6 PANEL)
+
+PANEL 1 (0:00-0:02)
+Establishing Shot. Tampilkan ${product} di lingkungan estetik. Angle eye-level.
+
+PANEL 2 (0:02-0:04)
+Extreme Close-up. Fokus pada tekstur, material, atau fitur utama.
+
+PANEL 3 (0:04-0:06)
+Demonstrasi Praktis. Faceless UGC (hanya tangan estetik yang terlihat sedang menggunakan produk).
+
+PANEL 4 (0:06-0:08)
+Angle Kreatif (45 derajat atau Top-down). Menyoroti kepraktisan penggunaan.
+
+PANEL 5 (0:08-0:09)
+Lifestyle Placement. Produk diletakkan di setting natural sehari-hari.
+
+PANEL 6 (0:09-0:10)
+Hero Beauty Shot. Tampilan statis elegan untuk Call to Action (CTA).
+
+====================================================
+ATURAN WAJIB / QUALITY LOCK
+
+• STYLE WAJIB: ${style}.
+• Seluruh manusia harus FACELESS (hanya tangan/bahu).
+• Desain harus terlihat seperti presentasi agensi kreatif ternama.
+• Gunakan pencahayaan studio komersial atau natural soft light.
+• Render dalam 8K resolution, photorealistic, ultra-detailed.
+• Produk ${product} HARUS konsisten bentuknya di seluruh 6 panel tanpa cacat.`;
+
+            document.getElementById('prompt-text-1').innerText = masterPrompt1;
             
-            document.getElementById('prompt-text-1').innerText = prompt;
-            
-            // Loading sequence
             document.getElementById('output-1').classList.add('hidden');
             document.getElementById('loading-1').classList.remove('hidden');
             
@@ -203,30 +393,93 @@
             }, 3000);
         }
 
+        // Move to Step 3
         function showStep3() {
             document.getElementById('step-3').classList.remove('hidden');
             document.getElementById('step-3').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Sync Data
         function syncData() {
             const product = document.getElementById('product-name').value;
             if(product) {
                 document.getElementById('product-name-2').value = product;
+                const btn = document.querySelector('button[onclick="syncData()"]');
+                btn.innerText = "✓ Data Tersinkronisasi";
+                btn.style.borderColor = "#059669";
+                btn.style.color = "#059669";
             } else {
-                alert("Silakan isi nama produk di Step 1 terlebih dahulu!");
+                alert("Peringatan: Kamu belum mengisi Nama Produk di Step 01!");
             }
         }
 
+        // STEP 3 Logic
         function generateStep3() {
-            const product = document.getElementById('product-name-2').value || "Produk";
-            const style = document.getElementById('video-style').value;
-            const av = document.getElementById('audio-visual').value;
+            const product = document.getElementById('product-name-2').value || "[Nama Produk Tidak Diisi]";
+            const vStyle = getFinalValue('video-style', 'custom-video-style');
+            const av = getFinalValue('audio-visual', 'custom-audio-visual');
             
-            const prompt = `Animate this 6-panel storyboard into a seamless 10-second vertical video for: ${product}. Visual Direction: ${style}. Audio/Visual Notes: ${av}. Keep the product design 100% consistent across all scenes. Apply smooth cinematic camera movements, soft natural lighting, and ensure no human faces are visible.`;
+            const masterPrompt3 = `MASTER PROMPT
+CINEMATIC AFFILIATE VIDEO GENERATOR
+STYLE VIDEO : ${vStyle.toUpperCase()}
+AUDIO & VISUAL : ${av.toUpperCase()}
+
+Berperanlah sebagai Award-winning Commercial Director, ASMR Director, Cinematographer, dan AI Video Expert.
+Tugasmu adalah MENGANIMASIKAN gambar storyboard infografis 6 panel menjadi sebuah video promosi vertikal berdurasi 10 detik yang mulus.
+
+====================================================
+INPUT USER
+
+1. Produk Target : ${product}
+
+====================================================
+HASIL YANG WAJIB DIBUAT
+
+Animasi video berdurasi TEPAT 10 DETIK dengan rasio vertikal 9:16.
+Transisi antar scene harus terasa natural, seperti direkam oleh kreator UGC profesional menggunakan smartphone flagship.
+
+====================================================
+DIREKSI KAMERA & PERGERAKAN (SCENE BY SCENE)
+
+0:00-0:02 | Scene 1
+Smooth slow push-in (zoom in perlahan) ke arah ${product}. Stabil dan estetik.
+
+0:02-0:04 | Scene 2
+Macro pan. Kamera bergerak perlahan menyamping untuk menyorot tekstur material produk.
+
+0:04-0:06 | Scene 3
+Natural handheld movement. Pergerakan tangan (faceless) berinteraksi dengan produk. Harus terlihat organik.
+
+0:06-0:08 | Scene 4
+Orbit shot (kamera memutar pelan) atau tilt down untuk menunjukkan dimensi produk.
+
+0:08-0:09 | Scene 5
+Static beauty shot dengan pergerakan cahaya (light sweep) yang lembut.
+
+0:09-0:10 | Scene 6
+Freeze frame statis dan elegan untuk memberikan ruang bagi teks CTA.
+
+====================================================
+AUDIO & MOTION GRAPHICS LAYER
+
+Format Audio/Visual yang dipilih: ${av}
+
+Berdasarkan format di atas, terapkan:
+• Suara ASMR yang sangat realistis (misal: gesekan pelan, klik, letakan barang).
+• Teks atau coretan (doodles) harus muncul secara berirama (pop-up) sesuai dengan visual produk.
+• JANGAN GUNAKAN voice-over manusia jika tidak secara eksplisit diminta di atas.
+
+====================================================
+ATURAN WAJIB / QUALITY LOCK
+
+• KONSISTENSI BENTUK: Bentuk ${product} harus tetap 100% identik di seluruh video. Jangan sampai berubah bentuk (no morphing).
+• Tidak boleh ada wajah manusia yang terlihat (STRICTLY FACELESS).
+• Gaya pergerakan wajib mengikuti instruksi: ${vStyle}.
+• Pencahayaan harus konsisten, cinematic, dan tidak overexposed.
+• Video harus terlihat meyakinkan sebagai review asli, bukan animasi CGI murahan.`;
+
+            document.getElementById('prompt-text-3').innerText = masterPrompt3;
             
-            document.getElementById('prompt-text-3').innerText = prompt;
-            
-            // Loading sequence
             document.getElementById('output-3').classList.add('hidden');
             document.getElementById('loading-3').classList.remove('hidden');
             
