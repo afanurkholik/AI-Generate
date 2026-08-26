@@ -14,567 +14,228 @@
             --text-main: #111111;
             --text-muted: #666666;
             --border-color: #eaeaea;
-            --accent-color: #000000;
-            --accent-hover: #333333;
+            --accent-color: #0f172a;
+            --accent-hover: #1e293b;
             --code-bg: #1a1a1a;
             --code-text: #f4f4f4;
-            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
-            --radius: 16px;
+            --radius: 12px;
             --radius-sm: 8px;
             --transition: all 0.3s ease;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Access Page */
-        #access-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-
-        /* Hidden Class */
-        .hidden {
-            display: none !important;
-        }
-
-        /* Typography */
-        .text-center { text-align: center; }
-        .text-muted { color: var(--text-muted); }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mb-3 { margin-bottom: 1.5rem; }
-        .mb-4 { margin-bottom: 2rem; }
-        .mt-4 { margin-top: 2rem; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4, .font-heading { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .hidden { display: none !important; }
+        .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; } .mt-3 { margin-top: 1.5rem; }
         
-        .brand-title {
-            font-size: 1.2rem;
-            letter-spacing: -0.5px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        .card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .step-badge { display: inline-block; background: var(--accent-color); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; }
         
-        .product-title {
-            font-size: 2.5rem;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-        }
-
-        /* Forms & Inputs */
-        input[type="text"], input[type="password"], select {
-            width: 100%;
-            padding: 1rem 1.2rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
-            background: var(--surface-color);
-            outline: none;
-            transition: var(--transition);
-        }
-
-        input[type="text"]:focus, input[type="password"]:focus, select:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 1rem 1.5rem;
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            text-align: center;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--accent-color);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            background-color: #f5f5f5;
-            border-color: var(--accent-color);
-        }
-
-        /* Cards & Layout */
-        .card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 2rem;
-            box-shadow: var(--shadow-subtle);
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 3rem;
-        }
-
-        .badge {
-            background: #f0f0f0;
-            color: var(--text-muted);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Workflow Steps */
-        .workflow-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 4rem;
-        }
-
-        .workflow-item {
-            padding: 1.5rem;
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            transition: var(--transition);
-        }
+        input[type="text"], select { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; margin-top: 0.5rem; }
+        .input-group { margin-bottom: 1.2rem; }
+        .input-group label { font-weight: 500; font-size: 0.9rem; }
         
-        .workflow-item:hover {
-            border-color: var(--accent-color);
-        }
-
-        .workflow-step {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--border-color);
-            margin-bottom: 0.5rem;
-        }
+        .btn { display: inline-block; width: 100%; padding: 1rem; background-color: var(--accent-color); color: white; border: none; border-radius: var(--radius-sm); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition); text-align: center; }
+        .btn:hover { background-color: var(--accent-hover); }
+        .btn-outline { background-color: transparent; color: var(--accent-color); border: 1px solid var(--border-color); }
         
-        .workflow-item h4 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .workflow-item p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Output Areas */
-        .prompt-box {
-            background-color: var(--code-bg);
-            color: var(--code-text);
-            padding: 1.5rem;
-            border-radius: var(--radius-sm);
-            font-family: monospace;
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-            margin: 1.5rem 0;
-            text-align: left;
-            line-height: 1.5;
-            border: 1px solid #333;
-        }
-
-        .success-text {
-            color: #10b981;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .simple-workflow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: #f9f9f9;
-            border-radius: var(--radius-sm);
-        }
-
-        /* Info Badge */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
+        .prompt-box { background-color: var(--code-bg); color: var(--code-text); padding: 1.5rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; margin: 1rem 0; border: 1px solid #333; }
+        .instruction-box { background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 1rem 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; font-size: 0.9rem; }
+        .instruction-box a { color: #3b82f6; font-weight: 700; text-decoration: none; }
         
-        .info-item {
-            font-size: 0.8rem;
-            padding: 0.5rem;
-            background: #f5f5f5;
-            border-radius: 4px;
-            color: var(--text-muted);
-        }
-
-        .info-item span {
-            font-weight: 700;
-            color: var(--text-main);
-            display: block;
-        }
+        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 0; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .panel-preview {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-        
-        .panel-item {
-            background: #f5f5f5;
-            padding: 0.8rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            text-align: center;
-            color: var(--text-muted);
-        }
-        
-        .panel-item strong {
-            color: var(--text-main);
-            display: block;
-        }
-
-        #error-message {
-            color: #ef4444;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
+        .success-text { color: #10b981; font-weight: 700; font-family: 'Space Grotesk', sans-serif; text-align: center; font-size: 1.5rem; margin-top: 2rem; }
     </style>
 </head>
 <body>
 
-    <!-- ACCESS PAGE -->
-    <div id="access-page" class="container">
-        <div class="mb-4">
-            <h2 class="brand-title">Walik Labs</h2>
-            <h1 class="product-title font-heading">AI Affiliate System</h1>
-            <p class="text-muted">Masukkan kode akses untuk mencoba prototype.</p>
-        </div>
-        
-        <div class="card" style="width: 100%; max-width: 400px;">
-            <div class="input-group">
-                <label>Kode Akses</label>
-                <input type="password" id="access-code" placeholder="Masukkan kode">
-            </div>
-            <button class="btn" onclick="checkAccess()">Masuk ke Prototype →</button>
-            <p id="error-message" class="hidden">Kode akses salah. Coba lagi.</p>
-        </div>
-    </div>
-
-    <!-- MAIN APP -->
-    <div id="main-app" class="container hidden">
-        
-        <nav class="navbar">
-            <div>
-                <div class="brand-title" style="font-size: 1rem;">Walik Labs</div>
-                <div class="font-heading" style="font-size: 1.2rem;">AI Affiliate System</div>
-            </div>
-            <span class="badge">Prototype</span>
-        </nav>
-
-        <header class="text-center mb-4">
-            <h1 class="product-title">Konten Affiliate.<br>Tanpa Tampil Muka.</h1>
-            <p class="text-muted mb-4">Buat storyboard dan prompt video menggunakan AI dari ide produk yang kamu punya.</p>
-            <button class="btn btn-outline" style="max-width: 200px;" onclick="scrollToStep1()">Coba Sekarang ↓</button>
+    <div class="container">
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="color: var(--text-muted); font-size: 1.2rem;">Walik Labs</h2>
+            <h1 class="font-heading" style="font-size: 2.2rem;">AI Affiliate System</h1>
+            <p>Ikuti 4 langkah mudah ini untuk membuat video faceless.</p>
         </header>
 
-        <div class="workflow-grid">
-            <div class="workflow-item">
-                <div class="workflow-step">01</div>
-                <h4>Masukkan Produk</h4>
-                <p>Ketik nama barang yang ingin kamu promosikan.</p>
-            </div>
-            <div class="workflow-item">
-                <div class="workflow-step">02</div>
-                <h4>Buat Storyboard</h4>
-                <p>AI membuat prompt storyboard 6 panel ala infografis premium.</p>
-            </div>
-            <div class="workflow-item">
-                <div class="workflow-step">03</div>
-                <h4>Buat Prompt Video</h4>
-                <p>Prompt video aesthetic lengkap dengan ASMR dan doodle.</p>
-            </div>
-            <div class="workflow-item">
-                <div class="workflow-step">04</div>
-                <h4>Generate di AI</h4>
-                <p>Masukkan prompt ke AI Generator andalanmu.</p>
-            </div>
-        </div>
-
-        <!-- STEP 01 -->
+        <!-- STEP 1 -->
         <section id="step-1" class="card">
-            <h2 class="mb-3 font-heading">01 — Prompt Storyboard</h2>
+            <div class="step-badge">STEP 01</div>
+            <h2 class="mb-3 font-heading">Prompt Storyboard</h2>
             
             <div class="input-group">
                 <label>Nama Produk</label>
-                <input type="text" id="product-input-1" placeholder="Contoh: Lunch Box 2 Tingkat">
+                <input type="text" id="product-name" placeholder="Contoh: Kabel Fast Charging">
             </div>
-            
             <div class="input-group">
                 <label>Style Vibe</label>
-                <select id="style-input">
-                    <option value="UGC Natural">UGC Natural (Hangat & Clean)</option>
-                    <option value="Product Showcase">Product Showcase (Modern & Terang)</option>
+                <select id="style-vibe">
                     <option value="Lifestyle Aesthetic">Lifestyle Aesthetic (Pinterest Vibe)</option>
-                    <option value="Minimalist Studio">Minimalist Studio (Background Polos)</option>
+                    <option value="UGC Natural">UGC Natural (Clean & Hangat)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Tema Warna</label>
+                <input type="text" id="color-theme" placeholder="Contoh: Warm Brown, Clean Beige, Elegant Dark">
+            </div>
+
+            <button class="btn" onclick="generateStep1()">✨ Buat Prompt Storyboard</button>
+
+            <div id="loading-1" class="loading-container hidden">
+                <div class="spinner"></div>
+                <p class="font-heading">AI sedang meracik instruksi storyboard...</p>
+            </div>
+
+            <div id="output-1" class="hidden mt-3">
+                <div class="prompt-box" id="prompt-text-1"></div>
+                <button class="btn btn-outline" onclick="copyText('prompt-text-1', this)">Salin Prompt</button>
+            </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section id="step-2" class="card hidden">
+            <div class="step-badge">STEP 02</div>
+            <h2 class="mb-3 font-heading">Generate Storyboard</h2>
+            
+            <div class="instruction-box">
+                <ol style="margin-left: 1.2rem; line-height: 1.8;">
+                    <li>Buka halaman AI Generator: <a href="https://labs.google/fx/tools/flow" target="_blank">https://labs.google/fx/tools/flow</a></li>
+                    <li><strong>Paste (Tempel)</strong> prompt yang sudah disalin dari Step 1.</li>
+                    <li><strong>Upload</strong> foto produk aslimu sebagai referensi.</li>
+                    <li>Setting Rasio: <strong>Bebas</strong> (sesuai kebutuhan).</li>
+                    <li>Model AI: Pilih <strong>Nano Banana Pro</strong> atau <strong>Nano Banana 2</strong>.</li>
+                    <li>Klik tombol Generate dan simpan hasil fotonya!</li>
+                </ol>
+            </div>
+            
+            <button class="btn btn-outline" onclick="showStep3()">Lanjut ke Step 3 ↓</button>
+        </section>
+
+        <!-- STEP 3 -->
+        <section id="step-3" class="card hidden">
+            <div class="step-badge">STEP 03</div>
+            <h2 class="mb-3 font-heading">Prompt Animasi Video</h2>
+            
+            <button class="btn btn-outline mb-3" style="font-size: 0.9rem; padding: 0.5rem;" onclick="syncData()">🔄 Ambil Data dari Step 1</button>
+
+            <div class="input-group">
+                <label>Nama Produk</label>
+                <input type="text" id="product-name-2" placeholder="Otomatis terisi..." readonly>
+            </div>
+            <div class="input-group">
+                <label>Style Video</label>
+                <select id="video-style">
+                    <option value="Aesthetic + Faceless">Aesthetic + Faceless (Tanpa Wajah)</option>
+                    <option value="Product Showcase">Product Showcase Fokus Detail</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Audio & Visual Tambahan</label>
+                <select id="audio-visual">
+                    <option value="ASMR + Doodle Callout">ASMR + Doodle Callout (Direkomendasikan)</option>
+                    <option value="Lofi Music + Minimalist Text">Lofi Music + Minimalist Text</option>
                 </select>
             </div>
 
-            <!-- Tambahan Input Warna -->
-            <div class="input-group">
-                <label>Tema Warna (Opsional)</label>
-                <input type="text" id="color-input" placeholder="Contoh: Warm Brown, Pastel, Clean Beige...">
+            <button class="btn" onclick="generateStep3()">🎬 Buat Prompt Video</button>
+
+            <div id="loading-3" class="loading-container hidden">
+                <div class="spinner"></div>
+                <p class="font-heading">AI sedang menyusun penggerak kamera...</p>
             </div>
 
-            <button class="btn mb-2" onclick="generateStoryboard()">✨ Buat Prompt Storyboard</button>
-
-            <!-- Output Step 1 -->
-            <div id="output-step-1" class="hidden mt-4" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
-                <div class="success-text">✓ Prompt Storyboard Siap</div>
-                
-                <div class="panel-preview">
-                    <div class="panel-item"><strong>01</strong> 0:00–0:02</div>
-                    <div class="panel-item"><strong>02</strong> 0:02–0:04</div>
-                    <div class="panel-item"><strong>03</strong> 0:04–0:06</div>
-                    <div class="panel-item"><strong>04</strong> 0:06–0:08</div>
-                    <div class="panel-item"><strong>05</strong> 0:08–0:09</div>
-                    <div class="panel-item"><strong>06</strong> 0:09–0:10</div>
-                </div>
-
-                <div id="storyboard-prompt" class="prompt-box"></div>
-                
-                <button class="btn btn-outline mb-2" onclick="copyText('storyboard-prompt', this)">Salin Prompt Storyboard</button>
-                <button class="btn" onclick="proceedToStep2()">Lanjut ke Langkah 02 →</button>
+            <div id="output-3" class="hidden mt-3">
+                <div class="prompt-box" id="prompt-text-3"></div>
+                <button class="btn btn-outline" onclick="copyText('prompt-text-3', this)">Salin Prompt Video</button>
             </div>
         </section>
 
-        <!-- STEP 02 -->
-        <section id="step-2" class="card">
-            <h2 class="mb-3 font-heading">02 — Prompt Video 10 Detik</h2>
+        <!-- STEP 4 -->
+        <section id="step-4" class="card hidden">
+            <div class="step-badge">STEP 04</div>
+            <h2 class="mb-3 font-heading">Generate Video Akhir</h2>
             
-            <div class="info-grid">
-                <div class="info-item">Durasi: <span>10 detik</span></div>
-                <div class="info-item">Format: <span>9:16 Vertikal</span></div>
-                <div class="info-item">Style: <span>Aesthetic + Faceless</span></div>
-                <div class="info-item">Audio/Visual: <span>ASMR + Doodle Callout</span></div>
+            <div class="instruction-box">
+                <ol style="margin-left: 1.2rem; line-height: 1.8;">
+                    <li>Buka kembali: <a href="https://labs.google/fx/tools/flow" target="_blank">https://labs.google/fx/tools/flow</a></li>
+                    <li><strong>Paste (Tempel)</strong> prompt animasi dari Step 3.</li>
+                    <li><strong>Upload</strong> foto storyboard yang kamu dapatkan di Step 2.</li>
+                    <li><strong>PENTING:</strong> Ubah settingan Rasio menjadi <strong>9:16</strong>.</li>
+                    <li>Model AI: Pilih <strong>Omni Flash</strong>.</li>
+                    <li>Klik Generate dan tunggu keajaibannya!</li>
+                </ol>
             </div>
 
-            <div class="input-group">
-                <label>Nama Produk</label>
-                <input type="text" id="product-input-2" placeholder="Otomatis terisi dari Step 01">
-            </div>
-
-            <button class="btn mb-2" onclick="generateVideoPrompt()">🎬 Buat Prompt Video</button>
-
-            <!-- Output Step 2 -->
-            <div id="output-step-2" class="hidden mt-4" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
-                <div class="success-text">✓ Prompt Video Siap</div>
-                <p class="text-muted mb-2 font-heading" style="font-size: 0.9rem;">Siap digunakan di AI Video Generator.</p>
-                
-                <div id="video-prompt" class="prompt-box"></div>
-                
-                <button class="btn btn-outline" onclick="copyText('video-prompt', this)">Salin Prompt Video</button>
-
-                <div class="simple-workflow">
-                    <span>01 Salin Prompt</span> →
-                    <span>02 Buka Video Generator</span> →
-                    <span>03 Masukkan Storyboard</span> →
-                    <span>04 Generate Video</span>
-                </div>
-            </div>
+            <div class="success-text">✨ Selesai! Video Siap Upload ✨</div>
         </section>
 
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
-        // Access Code Logic
-        function checkAccess() {
-            const code = document.getElementById('access-code').value;
-            const errorMsg = document.getElementById('error-message');
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text);
+            const original = btn.innerText;
+            btn.innerText = "✓ Tersalin!";
+            setTimeout(() => { btn.innerText = original; }, 2000);
+        }
+
+        function generateStep1() {
+            const product = document.getElementById('product-name').value || "Produk";
+            const style = document.getElementById('style-vibe').value;
+            const color = document.getElementById('color-theme').value || "Sesuai referensi";
             
-            if(code === 'user97') {
-                document.getElementById('access-page').classList.add('hidden');
-                document.getElementById('main-app').classList.remove('hidden');
+            const prompt = `Create a highly detailed, premium aesthetic storyboard infographic poster for a 10-second vertical affiliate video. Main product: ${product}. Layout: 3x2 grid of 6 sequential panels. Style: ${style}. Color Theme: ${color}. Include UI elements, timestamps, and short Indonesian benefit captions at the bottom of each panel.`;
+            
+            document.getElementById('prompt-text-1').innerText = prompt;
+            
+            // Loading sequence
+            document.getElementById('output-1').classList.add('hidden');
+            document.getElementById('loading-1').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('loading-1').classList.add('hidden');
+                document.getElementById('output-1').classList.remove('hidden');
+                document.getElementById('step-2').classList.remove('hidden');
+            }, 3000);
+        }
+
+        function showStep3() {
+            document.getElementById('step-3').classList.remove('hidden');
+            document.getElementById('step-3').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function syncData() {
+            const product = document.getElementById('product-name').value;
+            if(product) {
+                document.getElementById('product-name-2').value = product;
             } else {
-                errorMsg.classList.remove('hidden');
+                alert("Silakan isi nama produk di Step 1 terlebih dahulu!");
             }
         }
 
-        // Add Enter key listener for access code
-        document.getElementById('access-code').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                checkAccess();
-            }
-        });
-
-        // Navigation
-        function scrollToStep1() {
-            document.getElementById('step-1').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function proceedToStep2() {
-            const productName = document.getElementById('product-input-1').value;
-            if(productName) {
-                document.getElementById('product-input-2').value = productName;
-            }
-            document.getElementById('step-2').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Copy Text Logic
-        function copyText(elementId, buttonElement) {
-            const textToCopy = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = buttonElement.innerText;
-                buttonElement.innerText = "✓ Tersalin!";
-                buttonElement.style.backgroundColor = "#f5f5f5";
-                setTimeout(() => {
-                    buttonElement.innerText = originalText;
-                    buttonElement.style.backgroundColor = "transparent";
-                }, 2000);
-            });
-        }
-
-        // Generate Storyboard Prompt
-        function generateStoryboard() {
-            const product = document.getElementById('product-input-1').value || "produk";
-            const style = document.getElementById('style-input').value;
-            const color = document.getElementById('color-input').value || "neutral pastel";
+        function generateStep3() {
+            const product = document.getElementById('product-name-2').value || "Produk";
+            const style = document.getElementById('video-style').value;
+            const av = document.getElementById('audio-visual').value;
             
-            const promptText = `Create a highly detailed, premium aesthetic storyboard infographic poster for a 10-second vertical affiliate video. Main product: ${product}.
-
-LAYOUT & COMPOSITION (CRITICAL):
-- Format: A complete digital marketing infographic poster layout.
-- Overall Color Palette: ${color} theme.
-- Top Header: A stylish decorative banner at the very top containing bold typography "STORYBOARD UGC REVIEW" and the product name "${product}".
-- Main Grid: Below the header, a perfectly aligned 3x2 grid consisting of 6 sequential storyboard panels.
-- Bottom Footer: A minimalist info section at the bottom containing small icons and UI elements for "Detail Video", "Durasi", and "Tips Creator".
-
-STYLE & VIBE:
-- Aesthetic: ${style}, premium commercial product photography, high-end Pinterest lifestyle vibe. Soft, warm natural lighting.
-- Subject Focus: Faceless UGC style (only aesthetic hands interacting with the product).
-
-RICH UI & ANNOTATIONS (MAGAZINE STYLE):
-- Doodles: Add dynamic, cute hand-drawn style doodles (arrows, dashed lines, sparkles, tiny hearts, checkmarks) in white and bright accent colors overlapping the panels and background.
-- Panel UI: In the top left corner of each panel, add a modern timestamp badge (e.g., "0:00-0:02").
-- Captions: At the bottom of EVERY single panel, add a clean, rounded soft-colored text box containing a short Indonesian benefit text (e.g., "Kapasitas Besar", "Sangat Praktis", "Desain Estetik").
-- SFX Notes: Right below each caption text box, add a tiny colored text note for sound effects (e.g., "SFX: Click!", "SFX: Soft zip", "SFX: Tap tap").
-
-SCENE PROGRESSION:
-Panel 1: Establishing aesthetic lifestyle shot of the ${product}.
-Panel 2: Close-up demonstrating a specific feature, material texture, or opening mechanism.
-Panel 3: Wide angle showing the ${product}'s capacity, size, or main function.
-Panel 4: Detailed action shot focusing on real-life usage.
-Panel 5: Lifestyle placement showing the ${product} ready to be carried or used seamlessly.
-Panel 6: Final commercial beauty shot with a strong "Check out now!" CTA vibe.
-
-Render in 8k resolution, ultra-detailed, flat lay UI/UX design presentation style.`;
-
-            document.getElementById('storyboard-prompt').innerText = promptText;
-            document.getElementById('output-step-1').classList.remove('hidden');
-        }
-
-        // Generate Video Prompt
-        function generateVideoPrompt() {
-            const product = document.getElementById('product-input-2').value || "produk";
+            const prompt = `Animate this 6-panel storyboard into a seamless 10-second vertical video for: ${product}. Visual Direction: ${style}. Audio/Visual Notes: ${av}. Keep the product design 100% consistent across all scenes. Apply smooth cinematic camera movements, soft natural lighting, and ensure no human faces are visible.`;
             
-            const promptText = `Animate this 6-panel aesthetic infographic storyboard into a seamless, high-converting vertical (9:16) 10-second affiliate video for: ${product}.
-
-VISUAL DIRECTION:
-- Vibe: Cinematic, aesthetic, realistic, faceless UGC, Pinterest-style product showcase.
-- Camera: Smooth, organic camera movement (subtle pans, soft zooms) mimicking high-end smartphone cinematography.
-- Lighting: Soft natural sunlight, realistic depth of field.
-- Consistency: Strictly follow the storyboard progression. Keep the product design, shape, and color 100% consistent across all scenes. No morphing.
-
-TIMELINE & SCENE FLOW:
-0:00-0:02: Establishing lifestyle shot of ${product} in an aesthetic setting.
-0:02-0:04: Extreme close-up showing texture, material, or mechanism.
-0:04-0:06: Natural usage demonstration (only aesthetic hands visible).
-0:06-0:08: Creative angle highlighting practicality or capacity.
-0:08-0:09: Beautiful lifestyle placement (e.g., on a clean desk or being carried).
-0:09-0:10: Final elegant static shot for the Call-To-Action overlay.
-
-AUDIO (CRUCIAL ASMR):
-- Add hyper-realistic ASMR sound effects synchronized with visual interactions on the ${product}.
-- Layer soft sounds: gentle fabric rustle, subtle click, soft tap, satisfying whoosh.
-- Must feel satisfying, subtle, and premium. NO background music, NO voice-over (VO).
-
-MOTION GRAPHICS (DOODLES & TEXT):
-- Animate hand-drawn style doodles (arrows drawing themselves, sparkles popping, underlines tracing).
-- Animate soft pop-up feature callouts in Indonesian (e.g., "Praktis!", "Desain Estetik").`;
-
-            document.getElementById('video-prompt').innerText = promptText;
-            document.getElementById('output-step-2').classList.remove('hidden');
+            document.getElementById('prompt-text-3').innerText = prompt;
+            
+            // Loading sequence
+            document.getElementById('output-3').classList.add('hidden');
+            document.getElementById('loading-3').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('loading-3').classList.add('hidden');
+                document.getElementById('output-3').classList.remove('hidden');
+                document.getElementById('step-4').classList.remove('hidden');
+                document.getElementById('step-4').scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
         }
     </script>
 </body>
